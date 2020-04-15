@@ -1,19 +1,23 @@
 #pragma once
-
+#include "ogl_world.hpp"
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-// Include GLEW
 
 class Ogl_wrapper {
 public:
-	int Ogl_glfw_init();
-	int Ogl_redraw(int programID, unsigned int* indices, float *colors);
-	int Ogl_glew_init();
-	int Ogl_window(int width, int height, const char* name);
-	bool is_not_over();
+	Ogl_wrapper();
+	int ogl_glfw_init();
+	int setup_window(int width, int height, const char* name);
+	int ogl_glew_init();
+	int ogl_redraw();
+
+	// Link a Ogl_world object for getting elements structure and prepare vertex buffers
+	int ogl_link_world(Ogl_world* world);
 private:
-	GLFWwindow* ogl_window;
+	
+	GLFWwindow* window;
+	Ogl_world* world;
 };
 
 

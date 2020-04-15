@@ -6,14 +6,25 @@
 
 #include "ogl_wrapper.hpp"
 
-int Ogl_wrapper::Ogl_glfw_init() {
+Ogl_wrapper::Ogl_wrapper() {
+	this->ogl_glfw_init();
+	this->setup_window(100, 100, "LOL");
+	this->ogl_glew_init();
+
+
+	// Ensure we can capture the escape key being pressed below
+	glfwSetInputMode(this->window, GLFW_STICKY_KEYS, GL_TRUE);
+
+	this->world = nullptr;
+}
+
+int Ogl_wrapper::ogl_glfw_init() {
 
 	// Initialise GLFW
 	if (!glfwInit())
 	{
 		fprintf(stderr, "Failed to initialize GLFW\n");
 		getchar();
-		return -1;
 	}
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
@@ -21,33 +32,35 @@ int Ogl_wrapper::Ogl_glfw_init() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
 	return 0;
 }
 
-
-int Ogl_wrapper::Ogl_window(int width, int height, const char* name) {
+int Ogl_wrapper::setup_window(int width, int height, const char* name)
+{
 
 	// Open a window and create its OpenGL context
-	this->ogl_window = glfwCreateWindow(width, height, name, NULL, NULL);
-	if (ogl_window == NULL) {
+	this->window = glfwCreateWindow(width, height, name, NULL, NULL);
+	if (this->window == NULL) {
 		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		getchar();
 		glfwTerminate();
+		return -1;
 	}
-	glfwMakeContextCurrent(this->ogl_window);
+	glfwMakeContextCurrent(this->window);
 	glfwSwapInterval(1);
-
 	return 0;
 }
+
+/*
 bool Ogl_wrapper::is_not_over()
 {
 	return (glfwGetKey(this->ogl_window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(this->ogl_window) == 0);
 }
+*/
 
 
-int Ogl_wrapper::Ogl_glew_init() {
+int Ogl_wrapper::ogl_glew_init() {
 
 	// Initialize GLEW
 	glewExperimental = true; // Needed for core profile
@@ -58,13 +71,13 @@ int Ogl_wrapper::Ogl_glew_init() {
 		return -1;
 	}
 
-	// Ensure we can capture the escape key being pressed below
-	glfwSetInputMode(this->ogl_window, GLFW_STICKY_KEYS, GL_TRUE);
 	return 0;
 };
 
-int Ogl_wrapper::Ogl_redraw(int programID,unsigned int* our_tab, float *colors) {
 
+int Ogl_wrapper::ogl_redraw() {
+
+	//int programID,unsigned int* our_tab, float *colors
 	// Clear the screen
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -80,25 +93,36 @@ int Ogl_wrapper::Ogl_redraw(int programID,unsigned int* our_tab, float *colors) 
 		(void*)0            // array buffer offset
 		);
 
-
+	/*
 	int uniformId = glGetUniformLocation(programID, "u_Color");
 	if (uniformId == -1) return -1;
-
+	*/
 	
 	unsigned int count = 0;
-	for (unsigned int y = 0; y < 40; y++) {
-		for (unsigned int x = 0; x < 40; x++) {
-
-			glUniform4f(uniformId, colors[3*(40*y+x)], colors[3 * (40* y + x)+1], colors[3 * (40 * y + x)+2], 0);
+	for (unsigned int y = 0; y < 99; y++) {
+		for (unsigned int x = 0; x < 99; x++) {
+			/*
+			glUniform4f(uniformId, colors[3 * (100 * y + x)     ]
+				                 , colors[3 * (100 * y + x) + 1 ]
+				                 , colors[3 * (100 * y + x) + 2 ], 0);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, our_tab+count);
 			count += 6;
+			*/
 		}
 	}
 
 	glDisableVertexAttribArray(0);
 
 	// Swap buffers
-	glfwSwapBuffers(ogl_window);
+	glfwSwapBuffers(this->window);
 	glfwPollEvents();
 	return 0;
 }
+
+int Ogl_wrapper::ogl_link_world(Ogl_world* world)
+{
+	this->world = world;
+	return 0;
+}
+
+

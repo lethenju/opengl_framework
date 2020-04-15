@@ -12,12 +12,22 @@ set(GLEW_LIBRARY "GLEW_1130" )
 set(GLM_INCLUDE_PATH "" CACHE PATH "external/glm-0.9.7.1/" )
 
 set(MY_HEADER_FILES
+	src/color.hpp
+	src/coordinates.hpp
+	src/element.hpp
+	src/ogl_world.hpp
+	src/ogl_wrapper.hpp
 	src/shader.hpp
+	src/triangle.hpp
 )
 
 set(MY_SOURCE_FILES
-	src/main.cpp
+	src/element.cpp
+	src/ogl_world.cpp
+	src/ogl_wrapper.cpp
 	src/shader.cpp
+	src/triangle.cpp
+	src/main.cpp
 )
 
 
