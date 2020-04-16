@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-
+#include "shader.hpp"
 #include "ogl_wrapper.hpp"
 
 Ogl_wrapper::Ogl_wrapper() {
@@ -71,47 +71,54 @@ int Ogl_wrapper::ogl_glew_init() {
 		return -1;
 	}
 
+	// 1rst attribute buffer : vertices
+	glEnableVertexAttribArray(0);
+
+	GLuint shaderProgram = LoadShaders("SimpleVertexShader.shader","SimpleFragmentShader.shader");
+	glLinkProgram(shaderProgram);
+	glUseProgram(shaderProgram);
+	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	this->uniform_id = glGetUniformLocation(shaderProgram, "u_Color");
+
+
+	glGenVertexArrays(1, &(this->vao));
+	glBindVertexArray(this->vao);
+
+	glGenBuffers(1, &(this->vbo)); // Generate 1 buffer
+	glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+	
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * this->vertex_array_size, 
+	         	this->vertex_array, GL_STREAM_DRAW );
 	return 0;
 };
 
+int Ogl_wrapper::ogl_calc_vertex_array() {
+	if (this->world == nullptr) 
+		return -1;
+	
+	this->vertex_array_size = this->world->get_raw_coord_array_size();
+	this->vertex_array = new float[this->vertex_array_size];
+	this->world->get_raw_coord_array(this->vertex_array);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * this->vertex_array_size, 
+	         	this->vertex_array, GL_STREAM_DRAW );
+	
+}
 
 int Ogl_wrapper::ogl_redraw() {
-
-	//int programID,unsigned int* our_tab, float *colors
+	for (int i = 0; i <this->vertex_array_size; i+=2) {
+		printf("%f %f\n", *(this->vertex_array+i), *(this->vertex_array+i+1));
+	}
+		//int programID,unsigned int* our_tab, float *colors
 	// Clear the screen
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	// 1rst attribute buffer : vertices
-	glEnableVertexAttribArray(0);
-	//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glVertexAttribPointer(
-		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		2,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)0            // array buffer offset
-		);
 
-	/*
-	int uniformId = glGetUniformLocation(programID, "u_Color");
-	if (uniformId == -1) return -1;
-	*/
-	
-	unsigned int count = 0;
-	for (unsigned int y = 0; y < 99; y++) {
-		for (unsigned int x = 0; x < 99; x++) {
-			/*
-			glUniform4f(uniformId, colors[3 * (100 * y + x)     ]
-				                 , colors[3 * (100 * y + x) + 1 ]
-				                 , colors[3 * (100 * y + x) + 2 ], 0);
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, our_tab+count);
-			count += 6;
-			*/
-		}
-	}
 
-	glDisableVertexAttribArray(0);
+	glUniform3f(this->uniform_id, 1.0f, 0.0f, 0.0f);
+
+	glDrawArrays(GL_TRIANGLES, 0, this->vertex_array_size/2);
+
 
 	// Swap buffers
 	glfwSwapBuffers(this->window);

@@ -1,6 +1,7 @@
 #include "ogl_world.hpp"
 
-
+#include <cstdint>
+#include <cstring>
 
 int Ogl_world::add_element(Element new_element)
 {
@@ -41,4 +42,26 @@ Element* Ogl_world::get_element(Coordinates coord)
 const std::vector<Element> Ogl_world::get_elements()
 {
 	return this->elements;
+}
+int Ogl_world::get_raw_coord_array_size() {
+	printf("->  %d \n", this->elements.size() * 3 * 2);
+	return this->elements.size() * 3 * 2;
+}
+
+int Ogl_world::get_raw_coord_array(float* pointer_to_tab) {
+	int i = 0;
+	for (auto& element : this->elements) {
+		for (auto& triangle : element) {
+			for (auto& coord : triangle.coordinates) {
+				float new_x = ((float)coord.x)/100-0.5f;
+				float new_y = ((float)coord.y)/100-0.5f;
+				
+				
+				std::memcpy(pointer_to_tab+i  ,&new_x, sizeof(float));
+				std::memcpy(pointer_to_tab+i+1,&new_y, sizeof(float));
+				i+=2;
+			}
+		}
+	} 
+	return 0;
 }

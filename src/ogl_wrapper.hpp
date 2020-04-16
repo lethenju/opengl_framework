@@ -14,10 +14,17 @@ public:
 
 	// Link a Ogl_world object for getting elements structure and prepare vertex buffers
 	int ogl_link_world(Ogl_world* world);
+	int ogl_calc_vertex_array();
 private:
 	
-	GLFWwindow* window;
-	Ogl_world* world;
+	GLFWwindow* window = nullptr;
+	Ogl_world* world = nullptr;
+	int vertex_array_size = 900;
+	float* vertex_array = nullptr;
+	
+	GLuint vao;
+	GLuint vbo;
+	int uniform_id;
 };
 
 
