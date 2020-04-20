@@ -8,7 +8,7 @@
 
 Ogl_wrapper::Ogl_wrapper() {
 	this->ogl_glfw_init();
-	this->setup_window(100, 100, "LOL");
+	this->setup_window(1000, 1000, "LOL");
 	this->ogl_glew_init();
 
 
@@ -70,16 +70,16 @@ int Ogl_wrapper::ogl_glew_init() {
 		glfwTerminate();
 		return -1;
 	}
-
+	
 	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(0);
 
-	GLuint shaderProgram = LoadShaders("SimpleVertexShader.shader","SimpleFragmentShader.shader");
+	this->shaderProgram = LoadShaders("SimpleVertexShader.shader","SimpleFragmentShader.shader");
 	glLinkProgram(shaderProgram);
 	glUseProgram(shaderProgram);
-	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+	/*this->posAttrib = glGetAttribLocation(shaderProgram, "position");
+	
 	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
-	this->uniform_id = glGetUniformLocation(shaderProgram, "u_Color");
 
 
 	glGenVertexArrays(1, &(this->vao));
@@ -90,6 +90,7 @@ int Ogl_wrapper::ogl_glew_init() {
 	
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * this->vertex_array_size, 
 	         	this->vertex_array, GL_STREAM_DRAW );
+				 */
 	return 0;
 };
 
@@ -100,25 +101,43 @@ int Ogl_wrapper::ogl_calc_vertex_array() {
 	this->vertex_array_size = this->world->get_raw_coord_array_size();
 	this->vertex_array = new float[this->vertex_array_size];
 	this->world->get_raw_coord_array(this->vertex_array);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * this->vertex_array_size, 
-	         	this->vertex_array, GL_STREAM_DRAW );
 	
+	// Create and bind Vertex Array Object
+	glGenVertexArrays(1,&this->vao);
+	glBindVertexArray(vao);
+
+	// Create and bind Vertex Buffer Object
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * this->vertex_array_size, 
+	         	this->vertex_array, GL_STATIC_DRAW );
+	
+	// Retrieve position attribute from the shader
+	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+	// Configure vertex attribute pointer
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+	//unlink VBO and VAO
+	glEnableVertexAttribArray(0);
+	glBindVertexArray(0);
+	return 0;
 }
 
 int Ogl_wrapper::ogl_redraw() {
-	for (int i = 0; i <this->vertex_array_size; i+=2) {
-		printf("%f %f\n", *(this->vertex_array+i), *(this->vertex_array+i+1));
-	}
 		//int programID,unsigned int* our_tab, float *colors
 	// Clear the screen
 	glClear(GL_COLOR_BUFFER_BIT);
+	// Get uniform location for color.
 
+	GLint uniform_id = glGetUniformLocation(shaderProgram, "u_Color");
+	glUniform3f(uniform_id, 1.0f, 0.0f, 0.0f);
 
+	// Link VAO	
+	glBindVertexArray(vao);
+	glDrawArrays(GL_TRIANGLES, 0, this->vertex_array_size);
+	glBindVertexArray(0);
 
-	glUniform3f(this->uniform_id, 1.0f, 0.0f, 0.0f);
-
-	glDrawArrays(GL_TRIANGLES, 0, this->vertex_array_size/2);
-
+	// Unlink VAO	
 
 	// Swap buffers
 	glfwSwapBuffers(this->window);

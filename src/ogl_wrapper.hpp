@@ -24,7 +24,8 @@ private:
 	
 	GLuint vao;
 	GLuint vbo;
-	int uniform_id;
+	GLuint shaderProgram; 
+
 };
 
 
