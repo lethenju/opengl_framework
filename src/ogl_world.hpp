@@ -14,7 +14,8 @@ public:
 
 	int get_raw_coord_array_size();
 	int get_raw_coord_array(float* pointer_to_tab);
-	
+	int get_raw_color_array(float* pointer_to_tab);
+
 
 private:
 	std::vector<Element> elements;

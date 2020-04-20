@@ -65,3 +65,15 @@ int Ogl_world::get_raw_coord_array(float* pointer_to_tab) {
 	} 
 	return 0;
 }
+int Ogl_world::get_raw_color_array(float* pointer_to_tab) {
+	int i = 0;
+	for (auto& element : this->elements) {
+		for (auto& triangle : element) {
+			std::memcpy(pointer_to_tab+i  ,&(triangle.color.r), sizeof(float));
+			std::memcpy(pointer_to_tab+i+1,&(triangle.color.v), sizeof(float));
+			std::memcpy(pointer_to_tab+i+2,&(triangle.color.b), sizeof(float));
+			i+=3;	
+		}
+	} 
+	return 0;
+}
