@@ -22,10 +22,9 @@ private:
 	int vertex_array_size = 900;
 	float* vertex_array = nullptr;
 	
-	GLuint vao;
-	GLuint vbo;
+	GLuint vaoID[1];
+	GLuint vboID[1];
 	GLuint shaderProgram; 
-
 };
 
 

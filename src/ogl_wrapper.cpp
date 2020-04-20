@@ -63,7 +63,7 @@ bool Ogl_wrapper::is_not_over()
 int Ogl_wrapper::ogl_glew_init() {
 
 	// Initialize GLEW
-	glewExperimental = true; // Needed for core profile
+	glewExperimental = GL_TRUE; // Needed for core profile
 	if (glewInit() != GLEW_OK) {
 		fprintf(stderr, "Failed to initialize GLEW\n");
 		getchar();
@@ -71,26 +71,8 @@ int Ogl_wrapper::ogl_glew_init() {
 		return -1;
 	}
 	
-	// 1rst attribute buffer : vertices
-	glEnableVertexAttribArray(0);
 
 	this->shaderProgram = LoadShaders("SimpleVertexShader.shader","SimpleFragmentShader.shader");
-	glLinkProgram(shaderProgram);
-	glUseProgram(shaderProgram);
-	/*this->posAttrib = glGetAttribLocation(shaderProgram, "position");
-	
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-
-	glGenVertexArrays(1, &(this->vao));
-	glBindVertexArray(this->vao);
-
-	glGenBuffers(1, &(this->vbo)); // Generate 1 buffer
-	glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-	
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * this->vertex_array_size, 
-	         	this->vertex_array, GL_STREAM_DRAW );
-				 */
 	return 0;
 };
 
@@ -102,46 +84,54 @@ int Ogl_wrapper::ogl_calc_vertex_array() {
 	this->vertex_array = new float[this->vertex_array_size];
 	this->world->get_raw_coord_array(this->vertex_array);
 	
-	// Create and bind Vertex Array Object
-	glGenVertexArrays(1,&this->vao);
-	glBindVertexArray(vao);
+	glGenVertexArrays(1, &(this->vaoID[0]));
+	glGenBuffers(1, &(this->vboID[0]));
+	// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
+	glBindVertexArray(this->vaoID[0]);
 
-	// Create and bind Vertex Buffer Object
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * this->vertex_array_size, 
-	         	this->vertex_array, GL_STATIC_DRAW );
-	
-	// Retrieve position attribute from the shader
-	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-	// Configure vertex attribute pointer
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, this->vboID[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GL_FLOAT) * this->vertex_array_size, this->vertex_array,
+	 GL_STATIC_DRAW);
 
-	//unlink VBO and VAO
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
-	glBindVertexArray(0);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0); 
+// Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind
+
+	glBindVertexArray(0); // Unbind VAO 
+	//(it's always a good thing to unbind any buffer/array to prevent strange bugs)
+
 	return 0;
 }
 
 int Ogl_wrapper::ogl_redraw() {
-		//int programID,unsigned int* our_tab, float *colors
-	// Clear the screen
-	glClear(GL_COLOR_BUFFER_BIT);
-	// Get uniform location for color.
+	while (!glfwWindowShouldClose(this->window))
+{
+    glfwPollEvents();
+    if (glfwGetKey(this->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    {
+        glfwSetWindowShouldClose(this->window, GL_TRUE);
+    }
+
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 
 	GLint uniform_id = glGetUniformLocation(shaderProgram, "u_Color");
-	glUniform3f(uniform_id, 1.0f, 0.0f, 0.0f);
+	 GLfloat color[] = {
+        0.0f, 1.0f, 0.0f, 1.0f    };
+	glUniform4fv(uniform_id, 1, color);
 
-	// Link VAO	
-	glBindVertexArray(vao);
-	glDrawArrays(GL_TRIANGLES, 0, this->vertex_array_size);
-	glBindVertexArray(0);
 
-	// Unlink VAO	
+    //glViewport(0, 0, 1, 1);
+	glUseProgram(this->shaderProgram);
+    glBindVertexArray(this->vboID[0]);
 
-	// Swap buffers
-	glfwSwapBuffers(this->window);
-	glfwPollEvents();
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+    glfwSwapBuffers(window);
+}
 	return 0;
 }
 
