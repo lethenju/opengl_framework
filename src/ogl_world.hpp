@@ -4,6 +4,7 @@
 class Ogl_world
 {
 public:
+	Ogl_world(Color background): bg(background) {};
 	int add_element(Element new_element);
 	int remove_element(Element element_to_remove);
 	int change_color();
@@ -16,9 +17,11 @@ public:
 	int get_raw_coord_array(float* pointer_to_tab);
 	int get_raw_color_array(float* pointer_to_tab);
 
+	Color get_background();
 
 private:
 	std::vector<Element> elements;
+	Color bg;
 };
 
 

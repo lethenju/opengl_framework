@@ -23,6 +23,9 @@ int Ogl_world::change_color()
 	// TODO 
 	return 0;
 }
+Color Ogl_world::get_background() {
+	return this->bg;
+}
 
 Element* Ogl_world::get_element(Coordinates coord)
 {

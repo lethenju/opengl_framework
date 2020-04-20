@@ -12,7 +12,7 @@
 int main(void)
 {
 	Ogl_wrapper ogl = Ogl_wrapper();
-	Ogl_world world = Ogl_world();
+	Ogl_world world = Ogl_world(Color(0.2f,0,0));
 	ogl.ogl_link_world(&world);
 	Element e;
 	e.push_back(Triangle(Coordinates{ 0, 0 }, Coordinates{ 100, 0 }, Coordinates{ 100, 100 }, Color(1,0,1)));
