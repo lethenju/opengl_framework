@@ -111,39 +111,37 @@ int Ogl_wrapper::ogl_calc_vertex_array() {
 
 
 	if (this->color_array != nullptr) {
-//		delete this->color_array;
+		delete this->color_array;
 	}
-	printf("crash here ?\n");
 	this->color_array = new float[this->vertex_array_size/2]; // from 6 coord float we have 3 color data
 	this->world->get_raw_color_array(this->color_array);
 
-	//delete this->vertex_array;*/
+	delete this->vertex_array;
 	return 0;
 }
 
 int Ogl_wrapper::ogl_redraw() {
-	while (!glfwWindowShouldClose(this->window))
-{
-    glfwPollEvents();
-    if (glfwGetKey(this->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    {
-        glfwSetWindowShouldClose(this->window, GL_TRUE);
-    }
-	Color bg = this->world->get_background();
-    glClearColor(bg.r, bg.v, bg.b, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-	glUseProgram(this->shaderProgram);
+	while (!glfwWindowShouldClose(this->window)) {
+		glfwPollEvents();
+		if (glfwGetKey(this->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		{
+			glfwSetWindowShouldClose(this->window, GL_TRUE);
+		}
+		Color bg = this->world->get_background();
+		glClearColor(bg.r, bg.v, bg.b, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+		glUseProgram(this->shaderProgram);
 
-	GLint uniform_id = glGetUniformLocation(shaderProgram, "u_Color");
-    glBindVertexArray(this->vboID[0]);
-	// For each triangle
-	for (int i =0; i < this->vertex_array_size/(3*2); i++) {
-		glUniform4fv(uniform_id, 1, this->color_array+(i*3));
-    	glDrawArrays(GL_TRIANGLES, i*3, 3);
+		GLint uniform_id = glGetUniformLocation(shaderProgram, "u_Color");
+		glBindVertexArray(this->vboID[0]);
+		// For each triangle
+		for (int i =0; i < this->vertex_array_size/(3*2); i++) {
+			glUniform4fv(uniform_id, 1, this->color_array+(i*3));
+			glDrawArrays(GL_TRIANGLES, i*3, 3);
+		}
+
+		glfwSwapBuffers(window);
 	}
-
-    glfwSwapBuffers(window);
-}
 	return 0;
 }
 
