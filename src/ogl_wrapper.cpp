@@ -103,7 +103,7 @@ int Ogl_wrapper::ogl_calc_vertex_array() {
 
 	glBindVertexArray(0); // Unbind VAO 
 	//(it's always a good thing to unbind any buffer/array to prevent strange bugs)
-/*
+
 
 	if (this->color_array != nullptr) {
 //		delete this->color_array;
@@ -127,18 +127,15 @@ int Ogl_wrapper::ogl_redraw() {
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+	glUseProgram(this->shaderProgram);
 
 	GLint uniform_id = glGetUniformLocation(shaderProgram, "u_Color");
-	 GLfloat color[] = {
-        0.0f, 1.0f, 0.0f, 1.0f    };
-	glUniform4fv(uniform_id, 1, color);
-
-
-    //glViewport(0, 0, 1, 1);
-	glUseProgram(this->shaderProgram);
     glBindVertexArray(this->vboID[0]);
-
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+	// For each triangle
+	for (int i =0; i < this->vertex_array_size/(3*2); i++) {
+		glUniform4fv(uniform_id, 1, this->color_array+(i*3));
+    	glDrawArrays(GL_TRIANGLES, i*3, 3);
+	}
 
     glfwSwapBuffers(window);
 }

@@ -15,8 +15,8 @@ int main(void)
 	Ogl_world world = Ogl_world();
 	ogl.ogl_link_world(&world);
 	Element e;
-	e.push_back(Triangle(Coordinates{ 0, 0 }, Coordinates{ 50, 0 }, Coordinates{ 0, 50 }, Color(1,1,1)));
-	e.push_back(Triangle(Coordinates{ 50, 0 }, Coordinates{ 100, 0 }, Coordinates{ 0, 200 }, Color(1,1,1)));
+	e.push_back(Triangle(Coordinates{ 0, 0 }, Coordinates{ 100, 0 }, Coordinates{ 100, 100 }, Color(1,0,1)));
+	e.push_back(Triangle(Coordinates{ -40, 0 }, Coordinates{ -50, 50 }, Coordinates{ 0, 0 }, Color(1,1,1)));
 
 	world.add_element(e);
 	ogl.ogl_calc_vertex_array();
