@@ -7,16 +7,14 @@ int Ogl_world::add_element(Element new_element)
 {
 
 	this->elements.push_back(new_element);
-	// Re-compute vertex buffers
-	// Launch call for redraw;
+
 	return 0;
 }
 
 int Ogl_world::remove_element(Element element_to_remove)
 {
 	//this->elements.erase(std::remove(this->elements.begin(), this->elements.end(), element_to_remove));
-	// Re-compute vertex buffers
-	// launch call for redraw
+
 	return 0;
 }
 
