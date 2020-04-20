@@ -83,6 +83,7 @@ int Ogl_wrapper::ogl_calc_vertex_array() {
 	this->vertex_array_size = this->world->get_raw_coord_array_size();
 	this->vertex_array = new float[this->vertex_array_size];
 	this->world->get_raw_coord_array(this->vertex_array);
+
 	
 	glGenVertexArrays(1, &(this->vaoID[0]));
 	glGenBuffers(1, &(this->vboID[0]));
@@ -102,7 +103,16 @@ int Ogl_wrapper::ogl_calc_vertex_array() {
 
 	glBindVertexArray(0); // Unbind VAO 
 	//(it's always a good thing to unbind any buffer/array to prevent strange bugs)
+/*
 
+	if (this->color_array != nullptr) {
+//		delete this->color_array;
+	}
+	printf("crash here ?\n");
+	this->color_array = new float[this->vertex_array_size/2]; // from 6 coord float we have 3 color data
+	this->world->get_raw_color_array(this->color_array);
+
+	//delete this->vertex_array;*/
 	return 0;
 }
 
@@ -128,7 +138,7 @@ int Ogl_wrapper::ogl_redraw() {
 	glUseProgram(this->shaderProgram);
     glBindVertexArray(this->vboID[0]);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 
     glfwSwapBuffers(window);
 }

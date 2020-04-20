@@ -44,8 +44,12 @@ const std::vector<Element> Ogl_world::get_elements()
 	return this->elements;
 }
 int Ogl_world::get_raw_coord_array_size() {
-	printf("->  %d \n", this->elements.size() * 3 * 2);
-	return this->elements.size() * 3 * 2;
+	int count = 0;
+	for (auto& elem : this->elements) {
+		count+= elem.size() * 3 * 2;
+	}
+	printf("->  %d \n", count);
+	return count;
 }
 
 int Ogl_world::get_raw_coord_array(float* pointer_to_tab) {

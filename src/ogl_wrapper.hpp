@@ -19,8 +19,9 @@ private:
 	
 	GLFWwindow* window = nullptr;
 	Ogl_world* world = nullptr;
-	int vertex_array_size = 900;
+	int vertex_array_size = 0;
 	float* vertex_array = nullptr;
+	float* color_array = nullptr;
 	
 	GLuint vaoID[1];
 	GLuint vboID[1];
