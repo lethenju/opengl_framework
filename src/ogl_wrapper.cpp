@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <cstdio>
-
+#include <iostream>
 #include "shader.hpp"
 #include "ogl_wrapper.hpp"
 
@@ -32,6 +32,7 @@ int Ogl_wrapper::ogl_glfw_init() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 	return 0;
 }
 
@@ -47,6 +48,7 @@ int Ogl_wrapper::setup_window(int width, int height, const char* name)
 		return -1;
 	}
 	glfwMakeContextCurrent(this->window);
+	// Set the required callback functions
 	glfwSwapInterval(1);
 	return 0;
 }
@@ -58,7 +60,10 @@ bool Ogl_wrapper::is_not_over()
 		glfwWindowShouldClose(this->ogl_window) == 0);
 }
 */
+int Ogl_wrapper::setup_input_callback(void* cb) {
+	glfwSetKeyCallback(this->window, (GLFWkeyfun) cb);
 
+}
 
 int Ogl_wrapper::ogl_glew_init() {
 
@@ -147,5 +152,6 @@ int Ogl_wrapper::ogl_link_world(Ogl_world* world)
 	this->world = world;
 	return 0;
 }
+
 
 

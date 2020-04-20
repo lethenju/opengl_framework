@@ -8,19 +8,29 @@
 #include "ogl_world.hpp"
 #include "geom.hpp"
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+static Ogl_world world = Ogl_world(Color(0.2f,0,0));
+static Ogl_wrapper ogl = Ogl_wrapper();
 
 int main(void)
 {
-	Ogl_wrapper ogl = Ogl_wrapper();
-	Ogl_world world = Ogl_world(Color(0.2f,0,0));
+	ogl.setup_input_callback((void*)key_callback);
 	ogl.ogl_link_world(&world);
-	Element e;
-	e.push_back(Triangle(Coordinates{ 0, 0 }, Coordinates{ 100, 0 }, Coordinates{ 100, 100 }, Color(1,0,1)));
-	e.push_back(Triangle(Coordinates{ -40, 0 }, Coordinates{ -50, 50 }, Coordinates{ 0, 0 }, Color(1,1,1)));
-	Square s= Square(0,0,200,40, Color(1,0,0));
+	Square s= Square(0,0,50,50, Color(0,1,0));
 	world.add_element(s);
-	world.add_element(e);
 	ogl.ogl_calc_vertex_array();
 	ogl.ogl_redraw();
 	return 0;
+}
+// Is called whenever a key is pressed/released via GLFW
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+	world.add_element(s);
+	if (key == GLFW_KEY_RIGHT) {
+		std::cout << "right key pressed" << std::endl;
+	}
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+    	glfwSetWindowShouldClose(window, GL_TRUE);
+	
+	ogl.ogl_calc_vertex_array();
 }

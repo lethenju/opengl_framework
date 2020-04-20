@@ -15,6 +15,7 @@ public:
 	// Link a Ogl_world object for getting elements structure and prepare vertex buffers
 	int ogl_link_world(Ogl_world* world);
 	int ogl_calc_vertex_array();
+	int setup_input_callback(void* cb);
 private:
 	
 	GLFWwindow* window = nullptr;
