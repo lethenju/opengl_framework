@@ -19,6 +19,7 @@ set(MY_HEADER_FILES
 	src/ogl_wrapper.hpp
 	src/shader.hpp
 	src/triangle.hpp
+	src/geom.hpp
 )
 
 set(MY_SOURCE_FILES
@@ -27,6 +28,7 @@ set(MY_SOURCE_FILES
 	src/ogl_wrapper.cpp
 	src/shader.cpp
 	src/triangle.cpp
+	src/geom.cpp
 	src/main.cpp
 )
 
