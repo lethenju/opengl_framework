@@ -12,4 +12,4 @@ public:
 private:
     void physics_thread(void);
     std::vector<Element*> physics_subscribed_elements; 
-}
+};
