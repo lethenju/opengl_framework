@@ -3,14 +3,18 @@
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
+#include <thread>
 #include "coordinates.hpp"
 #include "ogl_wrapper.hpp"
 #include "ogl_world.hpp"
 #include "geom.hpp"
+#include "physics.hpp"
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 Ogl_world world = Ogl_world(Color(0.2f,0,0));
+Physics physics_manager;
 static Ogl_wrapper ogl = Ogl_wrapper();
+
 
 int main(void)
 {
@@ -18,7 +22,8 @@ int main(void)
 	ogl.ogl_link_world(&world);
 	Square s= Square(0,0,50,50, Color(0,1,0));
 	world.add_element(s);
-	ogl.ogl_calc_vertex_array();
+	physics_manager.subscribe(world.get_element(0));
+	std::thread physics_thread (my_physics_thread, &physics_manager);
 	ogl.ogl_redraw();
 	return 0;
 }

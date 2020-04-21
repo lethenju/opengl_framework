@@ -1,12 +1,12 @@
 #pragma once
-#include "element.hpp"
 #include <vector>
-
+#include <array>
+#include "element.hpp"
 class PhysicsElement{
 public:
     Element* element;
-    float velocity;
-    float acceleration;
+    std::array<float, 2> velocity;
+    std::array<float, 2> acceleration;
 };
 
 
@@ -17,13 +17,15 @@ public:
 
     int set_gravity(float g);
 
-    int set_velocity(Element* e, float v);
-    float get_velocity(Element* e);
-    int set_acceleration(Element* e, float a);
-    float get_acceleration(Element* e);
+    int set_velocity(Element* e, float vx, float vy);
+    int set_acceleration(Element* e, float ax, float ay);
+    std::array<float,2> get_velocity(Element* e);
+    std::array<float,2> get_acceleration(Element* e);
+
+    std::vector<PhysicsElement> physics_subscribed_elements; 
+    float gravity = 0.01f;
     
 private:
-    float gravity = 1;
-    void physics_thread(void);
-    std::vector<PhysicsElement> physics_subscribed_elements; 
 };
+
+void my_physics_thread(Physics *physics_manager);

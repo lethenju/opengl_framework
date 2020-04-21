@@ -1,11 +1,12 @@
 #include <iostream>
+#include <unistd.h>
 #include "physics.hpp"
 
 
 
 int Physics::subscribe (Element* e) {
 	PhysicsElement *physicsElement = new PhysicsElement	{
-		e, 0, 0
+		e, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , this->gravity}
 	};
 	this->physics_subscribed_elements.push_back(*physicsElement);
 }
@@ -18,51 +19,62 @@ int Physics::remove (Element* e) {
 			return 0;
 		}
 	}
-	return -1 // element not found
+	return -1; // element not found
 }
 
 int Physics::set_gravity(float g) {
 	this->gravity = g;
 }
 
-void Physics::physics_thread(void) {
-	while (1) {
-		std::cout << "Physics_thread" << std::endl;
-	}
-}
 
-int Physics::set_velocity(Element* e, float v) {
+
+int Physics::set_velocity(Element* e, float vx, float vy) {
 	for (auto& physics_element : this->physics_subscribed_elements) {
 		if (physics_element.element == e) {
-			physics_element.velocity = v;
+			physics_element.velocity[0] = vx;
+			physics_element.velocity[1] = vy;
 			return 0;
 		}
 	}
 	return -1; // Element not found
 }
-float Physics::get_velocity(Element* e) {
+std::array<float,2> Physics::get_velocity(Element* e) {
 	for (auto& physics_element : this->physics_subscribed_elements) {
 		if (physics_element.element == e) {
 			return physics_element.velocity;
 		}
 	}
-	return -1; // Element not found
+	return std::array<float,2>{0,0}; // Element not found
 }
-int Physics::set_acceleration(Element* e, float a) {
+int Physics::set_acceleration(Element* e, float ax, float ay) {
 	for (auto& physics_element : this->physics_subscribed_elements) {
 		if (physics_element.element == e) {
-			physics_element.acceleration = a;
+			physics_element.acceleration[0] = ax;
+			physics_element.acceleration[1] = ay;
 			return 0;
 		}
 	}
 	return -1; // Element not found
 }
 
-float Physics::get_acceleration(Element* e) {
+std::array<float,2> Physics::get_acceleration(Element* e) {
 	for (auto& physics_element : this->physics_subscribed_elements) {
 		if (physics_element.element == e) {
 			return physics_element.acceleration;
 		}
 	}
-	return -1; // Element not found
+	return std::array<float,2>{0,0}; // Element not found
+}
+
+
+void my_physics_thread(Physics *physics_manager) {
+	while (1) {
+		usleep(50000);
+		for (auto & element : physics_manager->physics_subscribed_elements){
+			element.element->translate(element.velocity[0], element.velocity[1]);
+				// Should be great to override += for std::array
+			element.velocity[0] += element.acceleration[0];
+			element.velocity[1] += element.acceleration[1];
+		}
+	}
 }
