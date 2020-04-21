@@ -57,16 +57,3 @@ std::array<int,2>  Element::get_dimensions() {
 	return bottom_right - position;
 }
 
-
-int Element::set_velocity(float v) {
-	this->velocity = v;
-}
-float Element::get_velocity() {
-	return this->velocity;
-}
-int Element::set_acceleration(float a) {
-	this->acceleration = a;
-}
-float Element::get_acceleration() {
-	return this->acceleration;
-}
