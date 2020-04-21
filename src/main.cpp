@@ -32,9 +32,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	} else if (key == GLFW_KEY_LEFT) {
 		cube->translate(-5,0);
 	} else if (key == GLFW_KEY_UP) {
-		cube->translate(0,5);
-	} else if (key == GLFW_KEY_DOWN) {
 		cube->translate(0,-5);
+	} else if (key == GLFW_KEY_DOWN) {
+		cube->translate(0,5);
 	} else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     	glfwSetWindowShouldClose(window, GL_TRUE);
 	
