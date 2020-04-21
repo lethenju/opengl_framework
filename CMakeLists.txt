@@ -20,15 +20,18 @@ set(MY_HEADER_FILES
 	src/shader.hpp
 	src/triangle.hpp
 	src/geom.hpp
+	src/physics.hpp
 )
 
 set(MY_SOURCE_FILES
+	src/coordinates.cpp
 	src/element.cpp
 	src/ogl_world.cpp
 	src/ogl_wrapper.cpp
 	src/shader.cpp
 	src/triangle.cpp
 	src/geom.cpp
+	src/physics.cpp
 	src/main.cpp
 )
 
