@@ -9,6 +9,7 @@ public:
 	int remove_element(Element element_to_remove);
 	int change_color();
 	Element* get_element(Coordinates coord);
+	Element* get_element(int nb);
 
 	// Return an ro version of the element list (to prevent modification from outside the class.. We can expose our world but not expose the ways to modify it
 	const std::vector<Element> get_elements();

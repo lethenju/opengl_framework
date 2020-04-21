@@ -40,6 +40,11 @@ Element* Ogl_world::get_element(Coordinates coord)
 	return nullptr;
 }
 
+Element* Ogl_world::get_element(int nb)
+{
+	return &(this->elements.at(nb));
+}
+
 const std::vector<Element> Ogl_world::get_elements()
 {
 	return this->elements;
@@ -56,8 +61,11 @@ int Ogl_world::get_raw_coord_array_size() {
 int Ogl_world::get_raw_coord_array(float* pointer_to_tab) {
 	int i = 0;
 	for (auto& element : this->elements) {
+		printf("`\nElement :");
 		for (auto& triangle : element) {
+			printf("`\nTriangle :");
 			for (auto& coord : triangle.coordinates) {
+				printf("( x : %d y : %d )", coord.x, coord.y);
 				float new_x = ((float)coord.x)/100-0.5f;
 				float new_y = ((float)coord.y)/100-0.5f;
 				
@@ -68,6 +76,8 @@ int Ogl_world::get_raw_coord_array(float* pointer_to_tab) {
 			}
 		}
 	} 
+	printf("`\n");
+
 	return 0;
 }
 int Ogl_world::get_raw_color_array(float* pointer_to_tab) {

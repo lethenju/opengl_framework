@@ -9,7 +9,7 @@
 #include "geom.hpp"
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
-static Ogl_world world = Ogl_world(Color(0.2f,0,0));
+Ogl_world world = Ogl_world(Color(0.2f,0,0));
 static Ogl_wrapper ogl = Ogl_wrapper();
 
 int main(void)
@@ -25,11 +25,17 @@ int main(void)
 // Is called whenever a key is pressed/released via GLFW
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-	world.add_element(s);
+
+	Element* cube = world.get_element(0);
 	if (key == GLFW_KEY_RIGHT) {
-		std::cout << "right key pressed" << std::endl;
-	}
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		cube->translate(5,0);
+	} else if (key == GLFW_KEY_LEFT) {
+		cube->translate(-5,0);
+	} else if (key == GLFW_KEY_UP) {
+		cube->translate(0,5);
+	} else if (key == GLFW_KEY_DOWN) {
+		cube->translate(0,-5);
+	} else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     	glfwSetWindowShouldClose(window, GL_TRUE);
 	
 	ogl.ogl_calc_vertex_array();
