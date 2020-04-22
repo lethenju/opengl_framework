@@ -111,12 +111,12 @@ int Ogl_wrapper::ogl_calc_vertex_array() {
 
 
 	if (this->color_array != nullptr) {
-		delete this->color_array;
+	//	delete this->color_array;
 	}
 	this->color_array = new float[this->vertex_array_size/2]; // from 6 coord float we have 3 color data
 	this->world->get_raw_color_array(this->color_array);
 
-	delete this->vertex_array;
+	//delete this->vertex_array;
 	return 0;
 }
 

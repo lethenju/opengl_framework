@@ -1,5 +1,5 @@
 #include "element.hpp"
 class Square : public Element {
 public:
-    Square(int x, int y, int width, int height, Color color);
+    Square(float x, float y, float width, float height, Color color);
 };

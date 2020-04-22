@@ -5,7 +5,7 @@ bool operator==(const Element& e, const Element& e2) {
 }
 
 
-int Element::translate(int x, int y) {
+int Element::translate(float x, float y) {
 	for (auto& triangle: *this) {
 		for (auto& coord : triangle.coordinates){
 			coord.x += x;
@@ -39,7 +39,7 @@ Coordinates Element::get_position() {
 	return best_coord;
 }
 
-std::array<int,2>  Element::get_dimensions() {
+std::array<float,2>  Element::get_dimensions() {
 
 	Coordinates position = this->get_position();
 
