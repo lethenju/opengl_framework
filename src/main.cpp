@@ -17,10 +17,6 @@ Physics physics_manager;
 static Ogl_wrapper ogl = Ogl_wrapper();
 static bool continue_flag = true;
 
-void update() {
-	usleep(5000);
-}
-
 int main(void)
 {
 	ogl.setup_input_callback((void*)key_callback);
