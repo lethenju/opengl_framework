@@ -54,7 +54,6 @@ int Ogl_world::get_raw_coord_array_size() {
 	for (auto& elem : this->elements) {
 		count+= elem.size() * 3 * 2;
 	}
-	printf("->  %d \n", count);
 	return count;
 }
 

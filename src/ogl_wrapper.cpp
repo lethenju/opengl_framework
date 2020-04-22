@@ -84,64 +84,81 @@ int Ogl_wrapper::ogl_glew_init() {
 int Ogl_wrapper::ogl_calc_vertex_array() {
 	if (this->world == nullptr) 
 		return -1;
-	
-	this->vertex_array_size = this->world->get_raw_coord_array_size();
-	this->vertex_array = new float[this->vertex_array_size];
-	this->world->get_raw_coord_array(this->vertex_array);
 
-	
-	glGenVertexArrays(1, &(this->vaoID[0]));
-	glGenBuffers(1, &(this->vboID[0]));
-	// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
-	glBindVertexArray(this->vaoID[0]);
+	if (this->world->get_raw_coord_array_size() == this->vertex_array_size) {
+		// Only update data
+		this->world->get_raw_coord_array(this->vertex_array);
+		this->world->get_raw_color_array(this->color_array);
+		glBindVertexArray(this->vaoID[0]);
+		glBindBuffer(GL_ARRAY_BUFFER, this->vboID[0]);
 
-	glBindBuffer(GL_ARRAY_BUFFER, this->vboID[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GL_FLOAT) * this->vertex_array_size, this->vertex_array,
-	 GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(GL_FLOAT) * this->vertex_array_size, this->vertex_array,GL_STATIC_DRAW);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, 0); 
+		glBindVertexArray(0); // Unbind VAO 
 
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0); 
-// Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind
+		return 0;
+	} else {
 
-	glBindVertexArray(0); // Unbind VAO 
-	//(it's always a good thing to unbind any buffer/array to prevent strange bugs)
+		if (this->color_array != nullptr) {
+			delete this->color_array;
+		}
+		if (this->vertex_array != nullptr) {
+			delete this->vertex_array;
+		}
+
+		this->vertex_array_size = this->world->get_raw_coord_array_size();
+		this->vertex_array = new float[this->vertex_array_size];
+		this->world->get_raw_coord_array(this->vertex_array);
+
+		
+		glGenVertexArrays(1, &(this->vaoID[0]));
+		glGenBuffers(1, &(this->vboID[0]));
+		// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
+		glBindVertexArray(this->vaoID[0]);
+
+		glBindBuffer(GL_ARRAY_BUFFER, this->vboID[0]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(GL_FLOAT) * this->vertex_array_size, this->vertex_array,
+		GL_STATIC_DRAW);
+
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
+		glEnableVertexAttribArray(0);
 
 
-	if (this->color_array != nullptr) {
-	//	delete this->color_array;
+		glBindBuffer(GL_ARRAY_BUFFER, 0); 
+	// Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind
+
+		glBindVertexArray(0); // Unbind VAO 
+		//(it's always a good thing to unbind any buffer/array to prevent strange bugs)
+
+
+		this->color_array = new float[this->vertex_array_size/2]; // from 6 coord float we have 3 color data
+		this->world->get_raw_color_array(this->color_array);
+
 	}
-	this->color_array = new float[this->vertex_array_size/2]; // from 6 coord float we have 3 color data
-	this->world->get_raw_color_array(this->color_array);
-
-	//delete this->vertex_array;
 	return 0;
 }
 
 int Ogl_wrapper::ogl_redraw() {
-	while (!glfwWindowShouldClose(this->window)) {
-		glfwPollEvents();
-		if (glfwGetKey(this->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		{
-			glfwSetWindowShouldClose(this->window, GL_TRUE);
-		}
-		Color bg = this->world->get_background();
-		glClearColor(bg.r, bg.v, bg.b, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-		glUseProgram(this->shaderProgram);
+	
+	glfwPollEvents();
 
-		GLint uniform_id = glGetUniformLocation(shaderProgram, "u_Color");
-		glBindVertexArray(this->vboID[0]);
-		// For each triangle
-		for (int i =0; i < this->vertex_array_size/(3*2); i++) {
-			glUniform4fv(uniform_id, 1, this->color_array+(i*3));
-			glDrawArrays(GL_TRIANGLES, i*3, 3);
-		}
+	Color bg = this->world->get_background();
+	glClearColor(bg.r, bg.v, bg.b, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glUseProgram(this->shaderProgram);
 
-		glfwSwapBuffers(window);
+	GLint uniform_id = glGetUniformLocation(shaderProgram, "u_Color");
+	glBindVertexArray(this->vboID[0]);
+	// For each triangle
+	for (int i =0; i < this->vertex_array_size/(3*2); i++) {
+		glUniform4fv(uniform_id, 1, this->color_array+(i*3));
+		glDrawArrays(GL_TRIANGLES, i*3, 3);
 	}
+
+	glfwSwapBuffers(window);
+
 	return 0;
 }
 

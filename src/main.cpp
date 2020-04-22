@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <unistd.h>
 #include "coordinates.hpp"
 #include "ogl_wrapper.hpp"
 #include "ogl_world.hpp"
@@ -16,16 +17,24 @@ Physics physics_manager;
 static Ogl_wrapper ogl = Ogl_wrapper();
 
 
+void update() {
+	usleep(5000);
+}
+
 int main(void)
 {
 	ogl.setup_input_callback((void*)key_callback);
 	ogl.ogl_link_world(&world);
 	world.add_element(Square(0,0,0.2f,0.2f, Color(0,1,0)));
-	//physics_manager.subscribe(world.get_element(0)); 
-	std::thread physics_thread (my_physics_thread, &physics_manager);
+	physics_manager.subscribe(world.get_element(0)); 
 	ogl.ogl_calc_vertex_array();
 
-	ogl.ogl_redraw();
+	std::thread physics_thread (my_physics_thread, &physics_manager);
+	while (1) {	
+		ogl.ogl_calc_vertex_array();
+		ogl.ogl_redraw();
+		usleep(5000);
+	}
 	return 0;
 }
 // Is called whenever a key is pressed/released via GLFW
