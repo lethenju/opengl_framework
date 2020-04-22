@@ -31,29 +31,29 @@ int main(void)
     Ogl_world world = Ogl_world(Color(0.2f,0,0));
     // Instantiate a physics_manager and launch physics thread
     Physics physics_manager;
-	std::thread physics_thread (my_physics_thread, &physics_manager);
-     // Setting a callback called each time a user press a key
-     // This callback is not shown in this example.
-	ogl.setup_input_callback((void*)key_callback);
+    std::thread physics_thread (my_physics_thread, &physics_manager);
+    // Setting a callback called each time a user press a key
+    // This callback is not shown in this example.
+    ogl.setup_input_callback((void*)key_callback);
     // We have to link the world to the Ogl_wrapper
-	ogl.ogl_link_world(&world);
+    ogl.ogl_link_world(&world);
     // Add a green square to the world
-	world.add_element(Square(0,0,0.2f,0.2f, Color(0,1,0)));
+    world.add_element(Square(0,0,0.2f,0.2f, Color(0,1,0)));
     // Subscribe the square to the physics manager
-	physics_manager.subscribe(world.get_element(0)); 
+    physics_manager.subscribe(world.get_element(0)); 
     
 	
     // Main loop
     static bool continue_flag = true;
-	while (continue_flag) {	
+    while (continue_flag) {	
         // Recompute data from world to be sent to OpenGL
-		ogl.ogl_calc_vertex_array();
+	ogl.ogl_calc_vertex_array();
         // Redraw screen accordingly
-		ogl.ogl_redraw();
+	ogl.ogl_redraw();
         // Wait for the next frame
-		usleep(5000);
-	}
-	return 0;
+	usleep(5000);
+    }
+    return 0;
 }
 ```
 
