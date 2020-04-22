@@ -23,7 +23,7 @@ public:
     std::array<float,2> get_acceleration(Element* e);
 
     std::vector<PhysicsElement> physics_subscribed_elements; 
-    float gravity = 0.0001f;
+    float gravity = -0.001f;
     
 private:
 };

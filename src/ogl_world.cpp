@@ -60,25 +60,18 @@ int Ogl_world::get_raw_coord_array_size() {
 int Ogl_world::get_raw_coord_array(float* pointer_to_tab) {
 	int i = 0;
 	for (auto& element : this->elements) {
-		printf("`\nElement :");
+//		printf("\nElement :");
 		for (auto& triangle : element) {
-			printf("`\nTriangle :");
+//			printf("\nTriangle :");
 			for (auto& coord : triangle.coordinates) {
-				printf("( y : %f y : %f )", coord.x, coord.y);
-				// Transform projection to fit -0.5 ; 0.5
-				// Need to invert y (up means low before, 
-				// and now should mean big)
-				//float new_x = ((float)coord.x)/100-0.5f;
-				//float new_y = (-(float)coord.y+100)/100-0.5f;
-				
-				
+//				printf("( y : %f y : %f )", coord.x, coord.y);
+
 				std::memcpy(pointer_to_tab+i  , &(coord.x), sizeof(float));
 				std::memcpy(pointer_to_tab+i+1, &(coord.y), sizeof(float));
 				i+=2;
 			}
 		}
 	} 
-	printf("`\n");
 
 	return 0;
 }

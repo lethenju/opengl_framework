@@ -6,6 +6,18 @@ bool operator==(const Element& e, const Element& e2) {
 
 
 int Element::translate(float x, float y) {
+	// first: boundary check,
+	for (auto& triangle: *this) {
+		for (auto& coord : triangle.coordinates){
+			// TODO Boundary check 
+			// Test a l'arrache
+			if (coord.x + x > 0.5  || coord.x + x < -0.5 ||
+			    coord.y + y > 0.5  || coord.y + y < -0.5) {
+				return -1;
+			}
+		}
+	}
+	// then move
 	for (auto& triangle: *this) {
 		for (auto& coord : triangle.coordinates){
 			coord.x += x;
