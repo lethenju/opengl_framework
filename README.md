@@ -14,7 +14,73 @@ The framework resolve around several blocks :
 * A `Ogl_world` object that manages the world and all the elements inside. 
 * A `Physics` object that manages the physics engine, wrapping world elements with velocity and acceleration parameters.
 
+## Installation
 
+You first need cmake, and C++ compilation tools if you dont have it already :
+``` bash 
+sudo apt install cmake make g++
+```
+
+This repository does not include OpenGL, GLFW, and GLEW. They are absolutely needed to make it work.
+
+You can install OpenGL and the needed OpenGL libraries with the following command 
+``` bash
+sudo apt install libx11-dev libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libxext-dev
+```
+
+You should create a directory named `external` next to the others and put the needed directories there.
+
+#### Needed directory structure :
+```bash
+.
+├── CMakeLists.txt
+├── README.md
+├── build
+│   ├── CMakeCache.txt
+│   ├── CMakeFiles
+│   ├── Makefile
+│   ├── SimpleFragmentShader.shader
+│   ├── SimpleVertexShader.shader
+│   ├── cmake_install.cmake
+│   ├── compile_commands.json
+│   ├── external
+│   └── opengl_framework
+├── external
+│   ├── CMakeLists.txt
+│   ├── glew-1.13.0
+│   ├── glfw-3.1.2
+└── src
+    ├── SimpleFragmentShader.shader
+    ├── SimpleVertexShader.shader
+    ├── boundaries.cpp
+    ├── boundaries.hpp
+    ├── color.hpp
+    ├── coordinates.cpp
+    ├── coordinates.hpp
+    ├── element.cpp
+    ├── element.hpp
+    ├── geom.cpp
+    ├── geom.hpp
+    ├── main.cpp
+    ├── ogl_world.cpp
+    ├── ogl_world.hpp
+    ├── ogl_wrapper.cpp
+    ├── ogl_wrapper.hpp
+    ├── physics.cpp
+    ├── physics.hpp
+    ├── shader.cpp
+    ├── shader.hpp
+    ├── triangle.cpp
+    └── triangle.hpp
+```
+
+Then build the project by typing 
+```bash
+mkdir build
+cd build
+cmake ..
+make opengl_framework
+```
 ## Usage 
 
 Look at the main.cpp file to see how its used.
