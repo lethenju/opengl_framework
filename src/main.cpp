@@ -29,7 +29,7 @@ int main(void)
 	while (continue_flag) {	
 		ogl.ogl_calc_vertex_array();
 		ogl.ogl_redraw();
-		usleep(5000);
+		usleep(500);
 	}
 	return 0;
 }

@@ -18,13 +18,15 @@ std::array<float, 2> Element::translate(float x, float y) {
 			// TODO Boundary check 
 			// Test a l'arrache
 			if (coord.x + x > 0.5 || coord.x + x < -0.5 ){
-				collision_force[0] = -1; 
+				collision_force[0] = -0.8; 
 			} 
 			if ( coord.y + y > 0.5 || coord.y + y < -0.5 ) {
-				collision_force[1] = -1;
+				collision_force[1] = -0.8;
 			} 
 		}
 	}
+	// A collision has been found
+	if (collision_force[0] != 1 && collision_force[1] != 1) return collision_force; 
 	// then move
 	for (auto& triangle: *this) {
 		for (auto& coord : triangle.coordinates){
