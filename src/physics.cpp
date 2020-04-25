@@ -71,12 +71,9 @@ void my_physics_thread(Physics *physics_manager) {
 	while (1) {
 		usleep(5000);
 		for (auto & element : physics_manager->physics_subscribed_elements){
-			if (element.element->translate(element.velocity[0]/10, element.velocity[1]/10) == -1) {
-				// Boundary found
-				
-				element.velocity[0] = -element.velocity[0];
-				element.velocity[1] = -element.velocity[1];
-			}
+			std::array<float, 2> collision_vector = element.element->translate(element.velocity[0]/10, element.velocity[1]/10);
+			element.velocity[0] =  element.velocity[0] * collision_vector[0];
+			element.velocity[1] =  element.velocity[1] * collision_vector[1];
 				// Should be great to override += for std::array
 			element.velocity[0] += element.acceleration[0]/10;
 			element.velocity[1] += element.acceleration[1]/10;

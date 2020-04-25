@@ -6,7 +6,7 @@
 class Element : public std::vector<Triangle>
 {
 public:
-    int translate(float x, float y);
+    std::array<float, 2> translate(float x, float y);
     int resize(float factor);
     int rotate(float degrees);
 

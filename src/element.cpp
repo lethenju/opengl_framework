@@ -5,16 +5,24 @@ bool operator==(const Element& e, const Element& e2) {
 }
 
 
-int Element::translate(float x, float y) {
+// Returns a vector which describe the transformation that the velocity of the object should have.
+// Returns [1,1] if no collisions : velocity doesnt change.
+std::array<float, 2> Element::translate(float x, float y) {
+	std::array<float, 2> collision_force{};
+	collision_force[0] = 1;
+	collision_force[1] = 1;
+
 	// first: boundary check,
 	for (auto& triangle: *this) {
 		for (auto& coord : triangle.coordinates){
 			// TODO Boundary check 
 			// Test a l'arrache
-			if (coord.x + x > 0.5  || coord.x + x < -0.5 ||
-			    coord.y + y > 0.5  || coord.y + y < -0.5) {
-				return -1;
-			}
+			if (coord.x + x > 0.5 || coord.x + x < -0.5 ){
+				collision_force[0] = -1; 
+			} 
+			if ( coord.y + y > 0.5 || coord.y + y < -0.5 ) {
+				collision_force[1] = -1;
+			} 
 		}
 	}
 	// then move
@@ -24,7 +32,7 @@ int Element::translate(float x, float y) {
 			coord.y += y;
 		}
 	}
-	return 0;
+	return collision_force;
 }
 
 int Element::resize(float factor) {
