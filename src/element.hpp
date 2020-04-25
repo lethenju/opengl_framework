@@ -2,7 +2,7 @@
 #include <vector>
 #include "triangle.hpp"
 
-// Surcharge de std::vector triangles
+// Element class, overloading std::vector.
 class Element : public std::vector<Triangle>
 {
 public:
