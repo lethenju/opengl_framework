@@ -9,7 +9,6 @@ set(GLFW_LIBRARY "glfw" )
 set(GLEW_INCLUDE_PATH "" CACHE PATH "external/glew-1.13.0/include" )
 set(GLEW_LIBRARY "GLEW_1130" )
 
-set(GLM_INCLUDE_PATH "" CACHE PATH "external/glm-0.9.7.1/" )
 
 set(MY_HEADER_FILES
 	src/color.hpp
