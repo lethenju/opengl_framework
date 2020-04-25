@@ -13,9 +13,13 @@ int Ogl_world::add_element(Element new_element)
 
 int Ogl_world::remove_element(Element element_to_remove)
 {
-	//this->elements.erase(std::remove(this->elements.begin(), this->elements.end(), element_to_remove));
-
-	return 0;
+	for (int count = 0; count < this->elements.size(); count++) {
+		if (this->elements.at(count) == element_to_remove) {
+			this->elements.erase(this->elements.begin()+count);
+			return 0;
+		}
+	}
+	return -1; // element not found
 }
 
 int Ogl_world::change_color()
@@ -60,11 +64,8 @@ int Ogl_world::get_raw_coord_array_size() {
 int Ogl_world::get_raw_coord_array(float* pointer_to_tab) {
 	int i = 0;
 	for (auto& element : this->elements) {
-//		printf("\nElement :");
 		for (auto& triangle : element) {
-//			printf("\nTriangle :");
 			for (auto& coord : triangle.coordinates) {
-//				printf("( y : %f y : %f )", coord.x, coord.y);
 
 				std::memcpy(pointer_to_tab+i  , &(coord.x), sizeof(float));
 				std::memcpy(pointer_to_tab+i+1, &(coord.y), sizeof(float));
