@@ -39,16 +39,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	Element* cube = world.get_element(0);
 	std::array<float, 2> v = physics_manager.get_velocity(cube);
 	if (key == GLFW_KEY_RIGHT) {
-		//cube->translate(0.05f,0);
 		physics_manager.set_velocity(cube,v[0]+0.05f, v[1]);
 	} else if (key == GLFW_KEY_LEFT) {
-//		cube->translate(-0.05f,0);
 		physics_manager.set_velocity(cube,v[0]-0.05f, v[1]);
 	} else if (key == GLFW_KEY_UP) {
-//		cube->translate(0,0.05f);
 		physics_manager.set_velocity(cube,v[0], v[1]+0.05f);
 	} else if (key == GLFW_KEY_DOWN) {
-//		cube->translate(0,-0.05f);
 		physics_manager.set_velocity(cube,v[0]+0.1f, v[1]-0.05f);
 
 	} else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
