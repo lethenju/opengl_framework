@@ -5,9 +5,14 @@
 #endif
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-
+/**
+ * Represent OpenGL, act as a layer to put everything directly related to opengl, glfw and glew inside
+ */ 
 class Ogl_wrapper {
 public:
+	/**
+	 * Constructor of Ogl_wrapper
+	 */
 	Ogl_wrapper();
 	int ogl_glfw_init();
 	int setup_window(int width, int height, const char* name);
