@@ -91,9 +91,7 @@ int Ogl_wrapper::ogl_calc_vertex_array() {
 		this->world->get_raw_color_array(this->color_array);
 		glBindVertexArray(this->vaoID[0]);
 		glBindBuffer(GL_ARRAY_BUFFER, this->vboID[0]);
-
-		glBufferData(GL_ARRAY_BUFFER, sizeof(GL_FLOAT) * this->vertex_array_size, this->vertex_array,GL_STATIC_DRAW);
-		
+	    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GL_FLOAT) * this->vertex_array_size, this->vertex_array);
 		glBindBuffer(GL_ARRAY_BUFFER, 0); 
 		glBindVertexArray(0); // Unbind VAO 
 
@@ -120,7 +118,7 @@ int Ogl_wrapper::ogl_calc_vertex_array() {
 
 		glBindBuffer(GL_ARRAY_BUFFER, this->vboID[0]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(GL_FLOAT) * this->vertex_array_size, this->vertex_array,
-		GL_STATIC_DRAW);
+		GL_DYNAMIC_DRAW);
 
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
 		glEnableVertexAttribArray(0);
@@ -150,12 +148,15 @@ int Ogl_wrapper::ogl_redraw() {
 	glUseProgram(this->shaderProgram);
 
 	GLint uniform_id = glGetUniformLocation(shaderProgram, "u_Color");
-	glBindVertexArray(this->vboID[0]);
+	glBindVertexArray(this->vaoID[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, this->vboID[0]);
 	// For each triangle
 	for (int i =0; i < this->vertex_array_size/(3*2); i++) {
 		glUniform4fv(uniform_id, 1, this->color_array+(i*3));
 		glDrawArrays(GL_TRIANGLES, i*3, 3);
 	}
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 
 	glfwSwapBuffers(window);
 
