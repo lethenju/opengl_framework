@@ -36,18 +36,24 @@ int main(void)
 	// top wall
 	world.add_element(Square(-1,0.95f,2,0.05f, Color(1,1,1)));
 
-	physics_manager.subscribe(world.get_element(0)); 
+	physics_manager.subscribe(world.get_element(0), 0, true); 
 	physics_manager.subscribe(world.get_element(1), 0, false); 
 	physics_manager.subscribe(world.get_element(2), 0, false); 
 	physics_manager.subscribe(world.get_element(3), 0, false);
 	physics_manager.subscribe(world.get_element(4), 0, false); 
  
-	physics_manager.set_velocity(world.get_element(0),0.01f,0);
-
+	physics_manager.set_velocity(world.get_element(0),0.05f,0.05f);
 
 	ogl.ogl_calc_vertex_array();
 	physics_manager.start();
 	while (continue_flag) {	
+		Element* Ball_position = world.get_element(0);
+		Element* IA_pad        = world.get_element(2);
+		float middle_IA_position = IA_pad->get_position().y - IA_pad->get_dimensions()[1]/2;
+		float middle_ball_position = Ball_position->get_position().y - Ball_position->get_dimensions()[1]/2;
+		
+		IA_pad->translate(0,middle_ball_position-middle_IA_position);
+
 		ogl.ogl_calc_vertex_array();
 		ogl.ogl_redraw();
 		usleep(500);

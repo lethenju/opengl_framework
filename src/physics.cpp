@@ -121,6 +121,7 @@ void my_physics_thread(Physics *physics_manager) {
 						other_one = &element;
 					} else {
 						std::cout << "Warning : Both colliding objects are non movable.." << std::endl;
+						continue;
 					}
 					// Go back
 					element.element->translate(-element.velocity[0]/10, -element.velocity[1]/10);
@@ -152,10 +153,7 @@ void my_physics_thread(Physics *physics_manager) {
 				}
 			}
 
-
 			element.element->translate(element.velocity[0]/10, element.velocity[1]/10);
-
-			
 				// Should be great to override += for std::array
 			element.velocity[0] += element.acceleration[0]/10;
 			element.velocity[1] += element.acceleration[1]/10;
