@@ -37,12 +37,12 @@ int main(void)
 	world.add_element(Square(-1,0.95f,2,0.05f, Color(1,1,1)));
 
 	physics_manager.subscribe(world.get_element(0)); 
-	physics_manager.subscribe(world.get_element(1), 0); 
-	physics_manager.subscribe(world.get_element(2), 0); 
-	physics_manager.subscribe(world.get_element(3), 0);
-	physics_manager.subscribe(world.get_element(4), 0); 
+	physics_manager.subscribe(world.get_element(1), 0, false); 
+	physics_manager.subscribe(world.get_element(2), 0, false); 
+	physics_manager.subscribe(world.get_element(3), 0, false);
+	physics_manager.subscribe(world.get_element(4), 0, false); 
  
-
+	physics_manager.set_velocity(world.get_element(0),0.01f,0);
 
 
 	ogl.ogl_calc_vertex_array();

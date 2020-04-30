@@ -21,14 +21,21 @@ int Physics::stop() {
 
 int Physics::subscribe (Element* e) {
 	PhysicsElement *physicsElement = new PhysicsElement	{
-		e, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , this->gravity}
+		e, true, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , this->gravity}
 	};
 	this->physics_subscribed_elements.push_back(*physicsElement);
 }
 
 int Physics::subscribe (Element* e, float gravity) {
 	PhysicsElement *physicsElement = new PhysicsElement	{
-		e, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , gravity}
+		e, true, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , gravity}
+	};
+	this->physics_subscribed_elements.push_back(*physicsElement);
+}
+
+int Physics::subscribe (Element* e, float gravity, bool movable) {
+	PhysicsElement *physicsElement = new PhysicsElement	{
+		e, movable, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , gravity}
 	};
 	this->physics_subscribed_elements.push_back(*physicsElement);
 }
@@ -103,14 +110,43 @@ void my_physics_thread(Physics *physics_manager) {
 		for (auto & element : physics_manager->physics_subscribed_elements){
 			// check collision with other elements
 			for (auto & second_element : physics_manager->physics_subscribed_elements) {
-				// TODO
-				//if element.element->
+				if (element.element->is_colliding_with(*second_element.element)){
+					std::cout << "Info : Collision" << std::endl;
+					PhysicsElement* element_to_move;
+					if (element.movable) {
+						element_to_move = &element;
+					} else if (second_element.movable) {
+						element_to_move = &second_element;
+					} else {
+						std::cout << "Warning : Both colliding objects are non movable.." << std::endl;
+					}
+					int direction = element.element->get_direction(*second_element.element);
+					switch (direction) {
+						case 0 :
+							std::cout << "Direction : up" << std::endl;
+							break;
+						case 1 :
+							std::cout << "Direction : right" << std::endl;
+							break;
+						case 2 :
+							std::cout << "Direction : down" << std::endl;
+							break;
+						case 3 :
+							std::cout << "Direction : left" << std::endl;
+							break;
+						default:
+							break;
+					}
+
+					element.velocity[0] =  element.velocity[0] * -1;
+					element.velocity[1] =  element.velocity[1] * -1;
+
+				}
 			}
 
 
 			element.element->translate(element.velocity[0]/10, element.velocity[1]/10);
-			//element.velocity[0] =  element.velocity[0] * collision_vector[0];
-			//element.velocity[1] =  element.velocity[1] * collision_vector[1];
+
 			
 				// Should be great to override += for std::array
 			element.velocity[0] += element.acceleration[0]/10;

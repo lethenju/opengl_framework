@@ -39,7 +39,6 @@ Element* Ogl_world::get_element(Coordinates coord)
 			}
 		}	
 	}
-
 	return nullptr;
 }
 
@@ -47,6 +46,7 @@ Element* Ogl_world::get_element(int nb)
 {
 	return &(this->elements.at(nb));
 }
+
 
 const std::vector<Element> Ogl_world::get_elements()
 {

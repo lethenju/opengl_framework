@@ -6,6 +6,7 @@
 class PhysicsElement{
 public:
     Element* element;
+    bool movable;
     std::array<float, 2> velocity;
     std::array<float, 2> acceleration;
 };
@@ -15,6 +16,7 @@ class Physics {
 public:
     int subscribe (Element* e);
     int subscribe (Element* e, float gravity);
+    int subscribe (Element* e, float gravity, bool movable);
     int remove (Element* e);
 
     float get_gravity();
