@@ -101,6 +101,13 @@ void my_physics_thread(Physics *physics_manager) {
 	while (physics_manager->is_running()) {
 		usleep(5000);
 		for (auto & element : physics_manager->physics_subscribed_elements){
+			// check collision with other elements
+			for (auto & second_element : physics_manager->physics_subscribed_elements) {
+				// TODO
+				//if element.element->
+			}
+
+
 			element.element->translate(element.velocity[0]/10, element.velocity[1]/10);
 			//element.velocity[0] =  element.velocity[0] * collision_vector[0];
 			//element.velocity[1] =  element.velocity[1] * collision_vector[1];

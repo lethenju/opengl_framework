@@ -20,16 +20,31 @@ int main(void)
 {
 	ogl.setup_input_callback((void*)key_callback);
 	ogl.ogl_link_world(&world);
+	
 	// ball
 	world.add_element(Square(0,0,0.2f,0.2f, Color(0,1,0)));
+	
 	// left pad
 	world.add_element(Square(-1,-0.5,0.1f,0.5f, Color(1,1,1)));
+	
 	// right pad
 	world.add_element(Square(1-0.1f,-0.5,0.1f,0.5f, Color(1,1,1)));
+
+	// bottom wall
+	world.add_element(Square(-1,-1,2,0.05f, Color(1,1,1)));
+
+	// top wall
+	world.add_element(Square(-1,0.95f,2,0.05f, Color(1,1,1)));
 
 	physics_manager.subscribe(world.get_element(0)); 
 	physics_manager.subscribe(world.get_element(1), 0); 
 	physics_manager.subscribe(world.get_element(2), 0); 
+	physics_manager.subscribe(world.get_element(3), 0);
+	physics_manager.subscribe(world.get_element(4), 0); 
+ 
+
+
+
 	ogl.ogl_calc_vertex_array();
 	physics_manager.start();
 	while (continue_flag) {	

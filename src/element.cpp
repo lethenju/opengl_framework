@@ -25,6 +25,12 @@ int Element::rotate(float degree) {
 	// TODO
 }
 
+bool Element::is_colliding_with(Element* another_element) {
+	// Pretend we're only using rectangles
+	//TODO
+	
+}
+
 
 Coordinates Element::get_position() {
 	// we need to get the upper corner coordinates.

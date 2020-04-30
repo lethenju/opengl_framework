@@ -143,6 +143,7 @@ int Ogl_wrapper::ogl_redraw() {
 	glfwPollEvents();
 	
 	Color bg = this->world->get_background();
+
 	glClearColor(bg.r, bg.v, bg.b, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glUseProgram(this->shaderProgram);

@@ -7,7 +7,6 @@ int Ogl_world::add_element(Element new_element)
 {
 
 	this->elements.push_back(new_element);
-
 	return 0;
 }
 
