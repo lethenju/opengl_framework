@@ -9,6 +9,8 @@ set(GLFW_LIBRARY "glfw" )
 set(GLEW_INCLUDE_PATH "" CACHE PATH "external/glew-1.13.0/include" )
 set(GLEW_LIBRARY "GLEW_1130" )
 
+set(CMAKE_BUILD_TYPE Debug)
+
 
 set(MY_HEADER_FILES
 	src/color.hpp
