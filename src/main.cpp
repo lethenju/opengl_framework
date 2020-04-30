@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
-#include <thread>
 #include <unistd.h>
 #include "coordinates.hpp"
 #include "ogl_wrapper.hpp"
@@ -21,32 +20,34 @@ int main(void)
 {
 	ogl.setup_input_callback((void*)key_callback);
 	ogl.ogl_link_world(&world);
+	// ball
 	world.add_element(Square(0,0,0.2f,0.2f, Color(0,1,0)));
-	physics_manager.subscribe(world.get_element(0)); 
-	ogl.ogl_calc_vertex_array();
+	// left pad
+	world.add_element(Square(-1,-0.5,0.1f,0.5f, Color(1,1,1)));
+	// right pad
+	world.add_element(Square(1-0.1f,-0.5,0.1f,0.5f, Color(1,1,1)));
 
-	std::thread physics_thread (my_physics_thread, &physics_manager);
+	physics_manager.subscribe(world.get_element(0)); 
+	physics_manager.subscribe(world.get_element(1), 0); 
+	physics_manager.subscribe(world.get_element(2), 0); 
+	ogl.ogl_calc_vertex_array();
+	physics_manager.start();
 	while (continue_flag) {	
 		ogl.ogl_calc_vertex_array();
 		ogl.ogl_redraw();
 		usleep(500);
 	}
+	physics_manager.stop();
 	return 0;
 }
 // Is called whenever a key is pressed/released via GLFW
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-	Element* cube = world.get_element(0);
-	std::array<float, 2> v = physics_manager.get_velocity(cube);
-	if (key == GLFW_KEY_RIGHT) {
-		physics_manager.set_velocity(cube,v[0]+0.05f, v[1]);
-	} else if (key == GLFW_KEY_LEFT) {
-		physics_manager.set_velocity(cube,v[0]-0.05f, v[1]);
-	} else if (key == GLFW_KEY_UP) {
-		physics_manager.set_velocity(cube,v[0], v[1]+0.05f);
+	Element* left_pad= world.get_element(1);
+	if (key == GLFW_KEY_UP) {
+		left_pad->translate(0, 0.1f);
 	} else if (key == GLFW_KEY_DOWN) {
-		physics_manager.set_velocity(cube,v[0]+0.1f, v[1]-0.05f);
-
+		left_pad->translate(0, -0.1f);
 	} else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
     	glfwSetWindowShouldClose(window, GL_TRUE);
 		continue_flag = false;

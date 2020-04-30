@@ -1,8 +1,23 @@
 #include <iostream>
 #include <unistd.h>
+#include <thread>
 #include "physics.hpp"
 
 
+int Physics::start() {
+	this->flag_continue = true;
+	this->physics_thread = std::make_shared<std::thread>(my_physics_thread, this);
+	return 0;
+}
+
+bool Physics::is_running() {
+	return this->flag_continue;
+}
+int Physics::stop() {
+	this->flag_continue = false;
+	this->physics_thread->join();
+	return 0;
+}
 
 int Physics::subscribe (Element* e) {
 	PhysicsElement *physicsElement = new PhysicsElement	{
@@ -10,6 +25,14 @@ int Physics::subscribe (Element* e) {
 	};
 	this->physics_subscribed_elements.push_back(*physicsElement);
 }
+
+int Physics::subscribe (Element* e, float gravity) {
+	PhysicsElement *physicsElement = new PhysicsElement	{
+		e, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , gravity}
+	};
+	this->physics_subscribed_elements.push_back(*physicsElement);
+}
+
 int Physics::remove (Element* e) {
 	for (int count = 0; count < this->physics_subscribed_elements.size(); count++) {
 		if (this->physics_subscribed_elements.at(count).element == e) {
@@ -22,8 +45,15 @@ int Physics::remove (Element* e) {
 	return -1; // element not found
 }
 
+
+float Physics::get_gravity() {
+	return this->gravity;
+}
+
+
 int Physics::set_gravity(float g) {
 	this->gravity = g;
+	// TODO update all elements with gravity
 }
 
 
@@ -68,12 +98,13 @@ std::array<float,2> Physics::get_acceleration(Element* e) {
 
 
 void my_physics_thread(Physics *physics_manager) {
-	while (1) {
+	while (physics_manager->is_running()) {
 		usleep(5000);
 		for (auto & element : physics_manager->physics_subscribed_elements){
-			std::array<float, 2> collision_vector = element.element->translate(element.velocity[0]/10, element.velocity[1]/10);
-			element.velocity[0] =  element.velocity[0] * collision_vector[0];
-			element.velocity[1] =  element.velocity[1] * collision_vector[1];
+			element.element->translate(element.velocity[0]/10, element.velocity[1]/10);
+			//element.velocity[0] =  element.velocity[0] * collision_vector[0];
+			//element.velocity[1] =  element.velocity[1] * collision_vector[1];
+			
 				// Should be great to override += for std::array
 			element.velocity[0] += element.acceleration[0]/10;
 			element.velocity[1] += element.acceleration[1]/10;

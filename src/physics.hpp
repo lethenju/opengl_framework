@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <array>
+#include <thread>
 #include "element.hpp"
 class PhysicsElement{
 public:
@@ -13,9 +14,15 @@ public:
 class Physics {
 public:
     int subscribe (Element* e);
+    int subscribe (Element* e, float gravity);
     int remove (Element* e);
 
+    float get_gravity();
     int set_gravity(float g);
+
+    int start();
+    bool is_running();
+    int stop();
 
     int set_velocity(Element* e, float vx, float vy);
     int set_acceleration(Element* e, float ax, float ay);
@@ -23,9 +30,11 @@ public:
     std::array<float,2> get_acceleration(Element* e);
 
     std::vector<PhysicsElement> physics_subscribed_elements; 
-    float gravity = -0.001f;
     
 private:
+    float gravity = -0.001f;
+    bool flag_continue = false;
+    std::shared_ptr<std::thread>  physics_thread;
 };
 
 void my_physics_thread(Physics *physics_manager);
