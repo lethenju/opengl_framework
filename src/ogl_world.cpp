@@ -22,7 +22,7 @@ int Ogl_world::remove_element(Element element_to_remove)
 	return -1; // element not found
 }
 
-int set_background(Color new_background) {
+int Ogl_world::set_background(Color new_background) {
 	this->bg = new_background;
 	return 0;
 }
