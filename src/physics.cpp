@@ -112,34 +112,42 @@ void my_physics_thread(Physics *physics_manager) {
 			for (auto & second_element : physics_manager->physics_subscribed_elements) {
 				if (element.element->is_colliding_with(*second_element.element)){
 					std::cout << "Info : Collision" << std::endl;
-					PhysicsElement* element_to_move;
+					PhysicsElement* element_to_move, *other_one;
 					if (element.movable) {
 						element_to_move = &element;
+						other_one = &second_element;
 					} else if (second_element.movable) {
 						element_to_move = &second_element;
+						other_one = &element;
 					} else {
 						std::cout << "Warning : Both colliding objects are non movable.." << std::endl;
 					}
-					int direction = element.element->get_direction(*second_element.element);
+					// Go back
+					element.element->translate(-element.velocity[0]/10, -element.velocity[1]/10);
+
+					int direction = element_to_move->element->get_direction(*other_one->element);
 					switch (direction) {
 						case 0 :
+							element.velocity[1] =  element.velocity[1] * -1;
 							std::cout << "Direction : up" << std::endl;
 							break;
 						case 1 :
 							std::cout << "Direction : right" << std::endl;
+							element.velocity[0] =  element.velocity[0] * -1;
 							break;
 						case 2 :
+							element.velocity[1] =  element.velocity[1] * -1;
 							std::cout << "Direction : down" << std::endl;
 							break;
 						case 3 :
 							std::cout << "Direction : left" << std::endl;
+							element.velocity[0] =  element.velocity[0] * -1;
 							break;
 						default:
 							break;
 					}
 
-					element.velocity[0] =  element.velocity[0] * -1;
-					element.velocity[1] =  element.velocity[1] * -1;
+					
 
 				}
 			}
