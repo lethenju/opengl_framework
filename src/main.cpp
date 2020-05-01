@@ -37,8 +37,8 @@ int main(void)
 	world.add_element(Square(-1,0.95f,2,0.05f, Color(1,1,1)));
 
 	physics_manager.subscribe(world.get_element(0), 0, true); 
-	physics_manager.subscribe(world.get_element(1), 0, false); 
-	physics_manager.subscribe(world.get_element(2), 0, false); 
+	physics_manager.subscribe(world.get_element(1), 0, true); 
+	physics_manager.subscribe(world.get_element(2), 0, true); 
 	physics_manager.subscribe(world.get_element(3), 0, false);
 	physics_manager.subscribe(world.get_element(4), 0, false); 
  
@@ -49,11 +49,10 @@ int main(void)
 	while (continue_flag) {	
 		Element* Ball_position = world.get_element(0);
 		Element* IA_pad        = world.get_element(2);
-		float middle_IA_position = IA_pad->get_position().y - IA_pad->get_dimensions()[1]/2;
-		float middle_ball_position = Ball_position->get_position().y - Ball_position->get_dimensions()[1]/2;
-		
+		float middle_IA_position = IA_pad->get_position().y + IA_pad->get_dimensions()[1]/2;
+		float middle_ball_position = Ball_position->get_position().y + Ball_position->get_dimensions()[1]/2;
 		IA_pad->translate(0,middle_ball_position-middle_IA_position);
-
+		physics_manager.handle_collisions(&physics_manager.physics_subscribed_elements.at(2), 0,(middle_ball_position-middle_IA_position));
 		ogl.ogl_calc_vertex_array();
 		ogl.ogl_redraw();
 		usleep(500);
@@ -66,9 +65,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 {
 	Element* left_pad= world.get_element(1);
 	if (key == GLFW_KEY_UP) {
-		left_pad->translate(0, 0.1f);
+			left_pad->translate(0, 0.1f);
+			physics_manager.handle_collisions(&physics_manager.physics_subscribed_elements.at(1), 0, 0.1f);
 	} else if (key == GLFW_KEY_DOWN) {
-		left_pad->translate(0, -0.1f);
+			left_pad->translate(0, -0.1f);
+			physics_manager.handle_collisions(&physics_manager.physics_subscribed_elements.at(1), 0, -0.1f);
 	} else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
     	glfwSetWindowShouldClose(window, GL_TRUE);
 		continue_flag = false;

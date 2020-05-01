@@ -31,6 +31,8 @@ public:
     std::array<float,2> get_velocity(Element* e);
     std::array<float,2> get_acceleration(Element* e);
 
+    bool handle_collisions(PhysicsElement* element, float velocity_x, float velocity_y);
+
     std::vector<PhysicsElement> physics_subscribed_elements; 
     
 private:
