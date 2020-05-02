@@ -69,7 +69,9 @@ add_definitions(
 
 add_library(opengl_framework STATIC
 	${LIBRARY_HEADER_FILES}
-	${LIBRARY_SOURCE_FILES})
+	${LIBRARY_SOURCE_FILES}
+)
+
 target_link_libraries(opengl_framework
 	${ALL_LIBS}
 )	
@@ -79,11 +81,12 @@ set_target_properties(opengl_framework PROPERTIES PUBLIC_HEADER include/opengl_f
 
 target_include_directories(opengl_framework PRIVATE include)
 target_include_directories(opengl_framework PRIVATE src)
-#[[
+
 install(TARGETS opengl_framework
+	  	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-]]
+
 
 
 #[[ Building Tests ]]
