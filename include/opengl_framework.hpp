@@ -38,6 +38,17 @@ public:
 	float b;
 };
 
+class Triangle
+{
+public:
+	Triangle(Coordinates p1, Coordinates p2, Coordinates p3, Color inside_color);
+	bool is_inside(Coordinates coord);
+
+	Color color;
+	std::array<Coordinates, 3> coordinates;
+
+};
+
 // Element class, overloading std::vector.
 class Element : public std::vector<Triangle>
 {
@@ -132,10 +143,6 @@ public:
 	Color get_background();
 
 private:
-	/** List of elements contained in the world.
-	 */  
-	std::vector<Element> elements;
-	
 	/** Background color of the world.
 	 */  
 	Color bg;
@@ -192,11 +199,6 @@ public:
     bool handle_collisions(PhysicsElement* element, float velocity_x, float velocity_y);
 
     std::vector<PhysicsElement> physics_subscribed_elements; 
-    
-private:
-    float gravity = -0.001f;
-    bool flag_continue = false;
-    std::shared_ptr<std::thread>  physics_thread;
 };
 
 void my_physics_thread(Physics *physics_manager);

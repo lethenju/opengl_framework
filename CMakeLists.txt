@@ -31,6 +31,15 @@ set(LIBRARY_SOURCE_FILES
 	src/physics.cpp
 )
 
+add_definitions(
+	-DTW_STATIC
+	-DTW_NO_LIB_PRAGMA
+	-DTW_NO_DIRECT3D
+	-DGLEW_STATIC
+	-D_CRT_SECURE_NO_WARNINGS
+)
+	
+
 
 
 add_library(opengl_framework SHARED
@@ -63,9 +72,8 @@ set(GLEW_LIBRARY "GLEW_1130" )
 
 
 include_directories(
-	external/glfw-3.1.2/include/
-	external/glm-0.9.7.1/
-	external/glew-1.13.0/include/
+	GLFW_INCLUDE_PATH
+	GLEW_INCLUDE_PATH
 )
 
 add_subdirectory(
@@ -73,19 +81,11 @@ add_subdirectory(
 )
 set(ALL_LIBS
 	${OPENGL_LIBRARY}
+	${GLFW_LIBRARY}
+	${GLEW_LIBRARY}
 	opengl_framework
-	glfw
-	GLEW_1130
 )
 
-add_definitions(
-	-DTW_STATIC
-	-DTW_NO_LIB_PRAGMA
-	-DTW_NO_DIRECT3D
-	-DGLEW_STATIC
-	-D_CRT_SECURE_NO_WARNINGS
-)
-	
 	#[[ Compiling Main ]]
 
 add_custom_target(tests)
@@ -104,4 +104,23 @@ add_executable(test_exe
 )
 target_link_libraries(test_exe
 	${ALL_LIBS}
+	GLEW 
+	GLU 
+	m 
+	GL  
+	dl 
+	m 
+	pthread 
+	xcb-dri2 
+	X11-xcb 
+	Xdamage 
+	Xfixes 
+	Xxf86vm 
+	Xext 
+	drm 
+	X11 
+	xcb-glx
+	xcb 
+	Xau 
+	Xdmcp
 )
