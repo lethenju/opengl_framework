@@ -4,11 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <unistd.h>
-#include "coordinates.hpp"
-#include "ogl_wrapper.hpp"
-#include "ogl_world.hpp"
-#include "geom.hpp"
-#include "physics.hpp"
+#include <opengl_framework.hpp>
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 Ogl_world world = Ogl_world(Color(0.2f,0,0));
