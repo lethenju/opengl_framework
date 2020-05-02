@@ -8,6 +8,32 @@ include(GNUInstallDirs)
 set(CMAKE_BUILD_TYPE Debug)
 
 
+	#[[ Dependencies ]]
+
+find_package(OpenGL REQUIRED)
+
+set(GLFW_INCLUDE_PATH PATH "" CACHE PATH "external/glfw-3.1.2/include/" )
+set(GLFW_LIBRARY "glfw" )
+
+set(GLEW_INCLUDE_PATH "" CACHE PATH "external/glew-1.13.0/include" )
+set(GLEW_LIBRARY "GLEW_1130" )
+
+
+include_directories(
+	GLFW_INCLUDE_PATH
+	GLEW_INCLUDE_PATH
+)
+
+add_subdirectory(
+    external/
+)
+set(ALL_LIBS
+	${OPENGL_LIBRARY}
+	${GLFW_LIBRARY}
+	${GLEW_LIBRARY}
+)
+
+
 set(LIBRARY_HEADER_FILES
 	src/color.hpp
 	src/coordinates.hpp
@@ -41,54 +67,28 @@ add_definitions(
 	
 
 
-
-add_library(opengl_framework SHARED
+add_library(opengl_framework STATIC
 	${LIBRARY_HEADER_FILES}
 	${LIBRARY_SOURCE_FILES})
+target_link_libraries(opengl_framework
+	${ALL_LIBS}
+)	
 
 set_target_properties(opengl_framework PROPERTIES VERSION ${PROJECT_VERSION})
 set_target_properties(opengl_framework PROPERTIES PUBLIC_HEADER include/opengl_framework.hpp)
 
 target_include_directories(opengl_framework PRIVATE include)
 target_include_directories(opengl_framework PRIVATE src)
-
+#[[
 install(TARGETS opengl_framework
     	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-
+]]
 
 
 #[[ Building Tests ]]
 
-	#[[ Dependencies ]]
-
-find_package(OpenGL REQUIRED)
-
-set(GLFW_INCLUDE_PATH PATH "" CACHE PATH "external/glfw-3.1.2/include/" )
-set(GLFW_LIBRARY "glfw" )
-
-set(GLEW_INCLUDE_PATH "" CACHE PATH "external/glew-1.13.0/include" )
-set(GLEW_LIBRARY "GLEW_1130" )
-
-
-include_directories(
-	GLFW_INCLUDE_PATH
-	GLEW_INCLUDE_PATH
-)
-
-add_subdirectory(
-    external/
-)
-set(ALL_LIBS
-	${OPENGL_LIBRARY}
-	${GLFW_LIBRARY}
-	${GLEW_LIBRARY}
-	opengl_framework
-)
-
 	#[[ Compiling Main ]]
-
-add_custom_target(tests)
 
 set(TESTS_SOURCE_FILES
 	tests/main.cpp
@@ -98,29 +98,24 @@ set(TESTS_INCLUDE_FILE
 	include/opengl_framework.hpp
 )
 
+add_definitions(
+	-DTW_STATIC
+	-DTW_NO_LIB_PRAGMA
+	-DTW_NO_DIRECT3D
+	-DGLEW_STATIC
+	-D_CRT_SECURE_NO_WARNINGS
+)
+set(ALL_LIBS
+	${ALL_LIBS}
+	opengl_framework
+)
+
+
 add_executable(test_exe
 	${TESTS_INCLUDE_FILE}
 	${TESTS_SOURCE_FILES}
 )
+
 target_link_libraries(test_exe
 	${ALL_LIBS}
-	GLEW 
-	GLU 
-	m 
-	GL  
-	dl 
-	m 
-	pthread 
-	xcb-dri2 
-	X11-xcb 
-	Xdamage 
-	Xfixes 
-	Xxf86vm 
-	Xext 
-	drm 
-	X11 
-	xcb-glx
-	xcb 
-	Xau 
-	Xdmcp
-)
+)	
