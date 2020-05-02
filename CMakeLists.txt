@@ -98,24 +98,11 @@ set(TESTS_INCLUDE_FILE
 	include/opengl_framework.hpp
 )
 
-add_definitions(
-	-DTW_STATIC
-	-DTW_NO_LIB_PRAGMA
-	-DTW_NO_DIRECT3D
-	-DGLEW_STATIC
-	-D_CRT_SECURE_NO_WARNINGS
-)
-set(ALL_LIBS
-	${ALL_LIBS}
-	opengl_framework
-)
-
-
 add_executable(test_exe
 	${TESTS_INCLUDE_FILE}
 	${TESTS_SOURCE_FILES}
 )
 
 target_link_libraries(test_exe
-	${ALL_LIBS}
+	opengl_framework
 )	

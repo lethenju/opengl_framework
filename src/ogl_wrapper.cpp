@@ -11,7 +11,6 @@ Ogl_wrapper::Ogl_wrapper() {
 	this->setup_window(1000, 1000, "LOL");
 	this->ogl_glew_init();
 
-
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(this->window, GLFW_STICKY_KEYS, GL_TRUE);
 
@@ -32,7 +31,7 @@ int Ogl_wrapper::ogl_glfw_init() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
+	std::cout << "GLFW Inited correctly" << std::endl;
 	return 0;
 }
 
@@ -47,9 +46,13 @@ int Ogl_wrapper::setup_window(int width, int height, const char* name)
 		glfwTerminate();
 		return -1;
 	}
+
 	glfwMakeContextCurrent(this->window);
 	// Set the required callback functions
 	glfwSwapInterval(1);
+
+	std::cout << "GLFW window initialised correctly" << std::endl;
+
 	return 0;
 }
 
@@ -69,8 +72,9 @@ int Ogl_wrapper::ogl_glew_init() {
 
 	// Initialize GLEW
 	glewExperimental = GL_TRUE; // Needed for core profile
-	if (glewInit() != GLEW_OK) {
-		fprintf(stderr, "Failed to initialize GLEW\n");
+	int rv = glewInit();
+	if (rv != GLEW_OK) {
+		fprintf(stderr, "Failed to initialize GLEW : %d\n", rv);
 		getchar();
 		glfwTerminate();
 		return -1;
