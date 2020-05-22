@@ -1,5 +1,14 @@
-cmake_minimum_required (VERSION 2.6)
-project (opengl_framework)
+cmake_minimum_required (VERSION 3.9)
+project (opengl_framework VERSION 0.1.0 DESCRIPTION "A simple OpenGL game library")
+
+#[[ Building Library ]]
+
+include(GNUInstallDirs)
+
+set(CMAKE_BUILD_TYPE Debug)
+
+
+	#[[ Dependencies ]]
 
 find_package(OpenGL REQUIRED)
 
@@ -9,10 +18,23 @@ set(GLFW_LIBRARY "glfw" )
 set(GLEW_INCLUDE_PATH "" CACHE PATH "external/glew-1.13.0/include" )
 set(GLEW_LIBRARY "GLEW_1130" )
 
-set(CMAKE_BUILD_TYPE Debug)
+
+include_directories(
+	GLFW_INCLUDE_PATH
+	GLEW_INCLUDE_PATH
+)
+
+add_subdirectory(
+    external/
+)
+set(ALL_LIBS
+	${OPENGL_LIBRARY}
+	${GLFW_LIBRARY}
+	${GLEW_LIBRARY}
+)
 
 
-set(MY_HEADER_FILES
+set(LIBRARY_HEADER_FILES
 	src/color.hpp
 	src/coordinates.hpp
 	src/element.hpp
@@ -24,7 +46,7 @@ set(MY_HEADER_FILES
 	src/physics.hpp
 )
 
-set(MY_SOURCE_FILES
+set(LIBRARY_SOURCE_FILES
 	src/coordinates.cpp
 	src/element.cpp
 	src/ogl_world.cpp
@@ -33,24 +55,6 @@ set(MY_SOURCE_FILES
 	src/triangle.cpp
 	src/geom.cpp
 	src/physics.cpp
-	src/main.cpp
-)
-
-
-include_directories(
-	external/glfw-3.1.2/include/
-	external/glm-0.9.7.1/
-	external/glew-1.13.0/include/
-    src/
-)
-
-add_subdirectory(
-    external/
-)
-set(ALL_LIBS
-	${OPENGL_LIBRARY}
-	glfw
-	GLEW_1130
 )
 
 add_definitions(
@@ -60,11 +64,48 @@ add_definitions(
 	-DGLEW_STATIC
 	-D_CRT_SECURE_NO_WARNINGS
 )
+	
 
-add_executable(opengl_framework
-	${MY_HEADER_FILES}
-	${MY_SOURCE_FILES}
+
+add_library(opengl_framework STATIC
+	${LIBRARY_HEADER_FILES}
+	${LIBRARY_SOURCE_FILES}
 )
+
 target_link_libraries(opengl_framework
 	${ALL_LIBS}
+)	
+
+set_target_properties(opengl_framework PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties(opengl_framework PROPERTIES PUBLIC_HEADER include/opengl_framework.hpp)
+
+target_include_directories(opengl_framework PRIVATE include)
+target_include_directories(opengl_framework PRIVATE src)
+
+install(TARGETS opengl_framework
+	  	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+
+
+#[[ Building Tests ]]
+
+	#[[ Compiling Main ]]
+
+set(TESTS_SOURCE_FILES
+	tests/main.cpp
 )
+
+set(TESTS_INCLUDE_FILE
+	include/opengl_framework.hpp
+)
+
+add_executable(test_exe
+	${TESTS_INCLUDE_FILE}
+	${TESTS_SOURCE_FILES}
+)
+
+target_link_libraries(test_exe
+	opengl_framework
+)	
