@@ -109,3 +109,16 @@ add_executable(test_exe
 target_link_libraries(test_exe
 	opengl_framework
 )	
+
+set(TEST_COLLISION_SOURCE_FILES
+	tests/tests_collision.cpp
+)
+
+add_executable(test_collision_exe
+	${TESTS_INCLUDE_FILE}
+	${TEST_COLLISION_SOURCE_FILES}
+)
+
+target_link_libraries(test_collision_exe
+	opengl_framework
+)	
