@@ -25,8 +25,8 @@ int main(void)
 	
 	physics_manager.subscribe(world.get_element(0), 0, true); 
 	physics_manager.subscribe(world.get_element(1), 0, false); 
- 
-	physics_manager.set_velocity(world.get_element(0),0.1f,0);
+    float velocity = 0.1f;
+	physics_manager.set_velocity(world.get_element(0), velocity,0);
 
 	ogl.ogl_calc_vertex_array();
 	physics_manager.start();
@@ -34,6 +34,29 @@ int main(void)
 		Element* first_element = world.get_element(0);
 		Element* wall          = world.get_element(1);
 		physics_manager.handle_collisions(&physics_manager.physics_subscribed_elements.at(0), physics_manager.get_velocity(first_element)[0], 0);
+
+
+        if (first_element->get_position().x > wall->get_position().x) {
+            // Collision failed.
+            std::cout << "Collision failed !" << std::endl;
+            std::cout << "Position of ball : x=" << first_element->get_position().x;
+            std::cout << "  y="<< first_element->get_position().y << std::endl;
+
+            std::cout << "Position of wall : x=" << wall->get_position().x;
+            std::cout << "  y="<< wall->get_position().y << std::endl;
+            return -1;
+
+        }
+
+        if (physics_manager.get_velocity(first_element)[0] < 0.0f && first_element->get_position().x < -0.5f) {
+            // Success
+            // The ball bounced and now its going the other way
+            std::cout << "Collision Success ! Try again with more velocity" << std::endl;
+            std::cout << "Velocity = " << velocity << std::endl;
+            
+            velocity+=0.01f;
+            physics_manager.set_velocity(first_element, velocity, 0);
+        }
 		ogl.ogl_calc_vertex_array();
 		ogl.ogl_redraw();
 		usleep(500);
@@ -41,6 +64,9 @@ int main(void)
 	physics_manager.stop();
 	return 0;
 }
+
+
+
 // Is called whenever a key is pressed/released via GLFW
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
