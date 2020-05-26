@@ -1,3 +1,32 @@
+/*
+MIT License
+
+Copyright (c) 2020 Julien LE THENO
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+/*
+ ============= OPENGL_FRAMEWORK SOURCE CODE ===========
+ @Description : Little framework to build graphics-based applications in openGL
+ @Author : Julien LE THENO
+ =============================================
+*/
 #include <vector>
 #include <array>
 #include <memory>
@@ -6,29 +35,44 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+/*** LoadShaders loads some shader files and returns the program ID
+ *  @param vertex_file_path the path of the vertex shader
+    @param fragment_file_path the path of the fragment shader
+	@return the openGL programID of the shader  
+ */
 GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path);
 
 
+/*** Class coordinates represent 2D coordinates x and y.
+ *   Basically is just a pair of float structure.
+ */
 class Coordinates {
 public:
 	float x, y;
 };
 
+// A coordinate is set to be inferior to another one if the sum of its components is inferior
 bool operator<(const Coordinates& c1, const Coordinates& c2);
+// A coordinate is set to be superior to another one if the sum of its components is superior
 bool operator>(const Coordinates& c1, const Coordinates& c2);
+// A coordinate is set to be equal to another one if both of their components are equal
+bool operator==(const Coordinates& c1, const Coordinates& c2);
 
 std::array<float, 2> operator-(const Coordinates& c1, const Coordinates& c2);
 std::array<float, 2> operator+(const Coordinates& c1, const Coordinates& c2);
 
 
+// Class color represent a color (in rgb definition only).
 class Color
 {
 public:
+	// Basic constructor create a black color
 	Color() {
 		this->r = 0;
 		this->v = 0;
 		this->b = 0;
 	};
+	// Custom constructor to initialize a color.
 	Color(float r, float v, float b) {
 		this->r = r;
 		this->v = v;
@@ -40,11 +84,17 @@ public:
 };
 
 
-
+/*** Class Triangle reprensents a triangle with its 3 coordinates and a color.
+ *
+ */
 class Triangle
 {
 public:
 	Triangle(Coordinates p1, Coordinates p2, Coordinates p3, Color inside_color);
+	/*** is_inside checks if a point is inside a triangle or not. 
+	 *   @param coord the coordinates of the point to test
+	 *   @return true if the point is inside the coordinate.
+	 */
 	bool is_inside(Coordinates coord);
 
 	Color color;
@@ -71,7 +121,9 @@ public:
 
 bool operator==(const Element& e1, const Element& e2);
 
-
+/** 
+ * a PhysicsElement is an Element object with extra physics properties.
+ */
 class PhysicsElement{
 public:
     Element* element;
@@ -112,7 +164,9 @@ private:
 
 void my_physics_thread(Physics *physics_manager);
 
-
+/**
+ * Represent a Square, as an Element
+ */
 class Square : public Element {
 public:
     Square(float x, float y, float width, float height, Color color);
