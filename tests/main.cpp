@@ -18,7 +18,7 @@ int main(void)
 	ogl.ogl_link_world(&world);
 	
 	// ball
-	world.add_element(Square(0,0,0.2f,0.2f, Color(0,1,0)));
+	world.add_element(Circle(0,0,0.08f, Color(0,1,0)));
 	
 	// left pad
 	world.add_element(Square(-1,-0.5,0.1f,0.5f, Color(1,1,1)));
