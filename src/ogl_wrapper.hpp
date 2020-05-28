@@ -13,7 +13,7 @@ public:
 	/**
 	 * Constructor of Ogl_wrapper
 	 */
-	Ogl_wrapper();
+	Ogl_wrapper(int width, int height, char* name);
 	int ogl_glfw_init();
 	int setup_window(int width, int height, const char* name);
 	int ogl_glew_init();

@@ -6,9 +6,9 @@
 #include "shader.hpp"
 #include "ogl_wrapper.hpp"
 
-Ogl_wrapper::Ogl_wrapper() {
+Ogl_wrapper::Ogl_wrapper(int width, int height, char* name) {
 	this->ogl_glfw_init();
-	this->setup_window(1000, 1000, "LOL");
+	this->setup_window(width, height, name);
 	this->ogl_glew_init();
 
 	// Ensure we can capture the escape key being pressed below

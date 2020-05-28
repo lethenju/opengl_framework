@@ -9,7 +9,7 @@
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 Ogl_world world = Ogl_world(Color(0.2f,0,0));
 Physics physics_manager;
-static Ogl_wrapper ogl = Ogl_wrapper();
+static Ogl_wrapper ogl = Ogl_wrapper(1000, 1000, "Pong");
 static bool continue_flag = true;
 
 int main(void)
