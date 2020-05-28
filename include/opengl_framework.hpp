@@ -173,6 +173,15 @@ public:
 };
 
 /**
+ * Represent a Circle, as an Element
+ */ 
+class Circle : public Element {
+public:
+    Circle(float x, float y, float radius, Color color);
+};
+
+
+/**
  * Represent the 2D "world" with primarily a list of elements.
  */ 
 class Ogl_world
