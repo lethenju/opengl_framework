@@ -20,8 +20,14 @@ int main(void)
 	world.add_element(Square(0,0,0.2f,0.2f, Color(0,1,0)));
 	
 	// circle
-	world.add_element(Circle(0.5f,0.5f,0.2f, Color(0,1,1)));
+	world.add_element(Circle(0.5f,0,0.2f, Color(0,1,1)));
 	
+	// tetragon
+	world.add_element(Tetragon(-0.7f,-0.2f,
+                               -0.4f,-0.02f,
+                               -0.3f, 0.3f,
+                               -0.8f, 0.1f, Color(1,1,0)));
+
 	while (continue_flag) {	
 		ogl.ogl_calc_vertex_array();
 		ogl.ogl_redraw();
