@@ -1,3 +1,4 @@
+#include <math.h>
 #include "element.hpp"
 
 bool operator==(const Element& e, const Element& e2) {
@@ -21,8 +22,54 @@ int Element::resize(float factor) {
 	// TODO
 }
 
-int Element::rotate(float degree) {
-	// TODO
+Coordinates Element::get_center() {
+	float x = 0, y = 0, n = 0;
+	
+	for (auto& triangle: *this) {
+		for (auto& coord : triangle.coordinates){
+			n++;
+			x += coord.x;
+			y += coord.y;
+		}
+	}
+	if (n>0) {
+		return Coordinates{x/n , y/n};
+	}
+	return Coordinates{0,0};
+}
+
+int Element::rotate(Coordinates rotationPoint, float rad) {
+	for (auto& triangle: *this) {
+		for (auto& coord : triangle.coordinates){
+			// Firstly compute the vector between coord and RotationPoint
+			float vect_x = coord.x - rotationPoint.x;
+			float vect_y = coord.y - rotationPoint.y;
+			// Transfer to polar coordinates
+			float r = sqrt(vect_x * vect_x + vect_y * vect_y);
+			float theta;
+			if (vect_x > 0) {
+				 theta = atan(vect_y/vect_x);
+			} else if (vect_x < 0) {
+				 theta = atan(vect_y/vect_x) + 3.14159f;
+			} else if (vect_y > 0){
+				 theta =  3.14159f / 2.0f; // Pointing upward
+			} else {
+				 theta = - 3.14159f / 2.0f; // Pointing downwards
+			}
+			
+
+			// Apply rotation
+			theta += rad;
+
+			// Retransfer to cartesian
+			vect_x = r*cos(theta);
+			vect_y = r*sin(theta);
+			// Recompute the point coords
+			coord.x = rotationPoint.x + vect_x;
+			coord.y = rotationPoint.y + vect_y;
+			
+		}
+	}
 }
 
 bool Element::is_colliding_with(Element another_element) {
