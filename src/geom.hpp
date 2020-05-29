@@ -25,11 +25,11 @@ public:
 
 class SevenSegment : public Element {
 public:
-    //  |=b1=|
-    // b2    b3
-    //  * b4 *
-    // b5    b5
     //  |=b6=|
+    // b4    b5
+    //  * b3 *
+    // b1    b2
+    //  |=0=|
     SevenSegment(bool segments[7], float x, float y,float width,float height, Color color);
 };
 
