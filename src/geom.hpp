@@ -23,3 +23,13 @@ public:
     Line(float x1, float y1, float x2, float y2, float thickness, Color color);
 };
 
+class SevenSegment : public Element {
+public:
+    //  |=b1=|
+    // b2    b3
+    //  * b4 *
+    // b5    b5
+    //  |=b6=|
+    SevenSegment(bool segments[7], float x, float y,float width,float height, Color color);
+};
+

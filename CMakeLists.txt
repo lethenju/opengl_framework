@@ -167,3 +167,15 @@ target_link_libraries(tests_resize_exe
 )	
 
 
+set(TEST_SEVENSEG_SOURCE_FILES
+	tests/tests_sevenseg.cpp
+)
+
+add_executable(tests_sevenseg_exe
+	${TESTS_INCLUDE_FILE}
+	${TEST_SEVENSEG_SOURCE_FILES}
+)
+
+target_link_libraries(tests_sevenseg_exe
+	opengl_framework
+)	
