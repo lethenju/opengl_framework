@@ -28,7 +28,11 @@ int main(void)
                                -0.3f, 0.3f,
                                -0.8f, 0.1f, Color(1,1,0)));
 
-	while (continue_flag) {	
+	// line
+	world.add_element(Line(-0.9f,-0.8f,
+						   -0.4f,-0.7f, 0.005f, Color(0.8f,1,0.2f)));
+
+	while (continue_flag) {
 		ogl.ogl_calc_vertex_array();
 		ogl.ogl_redraw();
 		usleep(500);

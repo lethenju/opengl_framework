@@ -27,3 +27,22 @@ Tetragon::Tetragon(float x1, float y1, float x2, float y2,
     this->push_back(Triangle(Coordinates{x1,y1}, Coordinates{x4, y4},  Coordinates{x3, y3}, color));
     this->push_back(Triangle(Coordinates{x2,y2}, Coordinates{x4, y4},  Coordinates{x3, y3}, color));
 }
+
+Line::Line(float x1, float y1, float x2, float y2,float thickness, Color color) {
+    float x3, y3, x4, y4;
+
+    for (float i = -thickness; i <= thickness; i+=thickness/10) {
+        x3 = x1+thickness;
+        y3 = y1+thickness;
+
+        x4 = x2+thickness;
+        y4 = y2+thickness;
+        
+        this->push_back(Triangle(Coordinates{x1,y1}, Coordinates{x2, y2},  Coordinates{x3, y3}, color));
+        this->push_back(Triangle(Coordinates{x2,y2}, Coordinates{x1, y1},  Coordinates{x4, y4}, color));
+        this->push_back(Triangle(Coordinates{x1,y1}, Coordinates{x4, y4},  Coordinates{x3, y3}, color));
+        this->push_back(Triangle(Coordinates{x2,y2}, Coordinates{x4, y4},  Coordinates{x3, y3}, color));
+
+    }
+}
+
