@@ -18,8 +18,17 @@ int Element::translate(float x, float y) {
 	return 0;
 }
 
-int Element::resize(float factor) {
-	// TODO
+int Element::resize(Coordinates resizePoint, float factorX, float factorY) {
+	for (auto& triangle: *this) {
+		for (auto& coord : triangle.coordinates){
+			float vect_x = coord.x - resizePoint.x;
+			float vect_y = coord.y - resizePoint.y;
+			vect_x *= factorX;
+			vect_y *= factorY;
+			coord.x = resizePoint.x + vect_x;
+			coord.y = resizePoint.y + vect_y;
+		}
+	}
 }
 
 Coordinates Element::get_center() {
