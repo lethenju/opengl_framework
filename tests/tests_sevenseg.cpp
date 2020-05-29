@@ -16,9 +16,13 @@ int main(void)
 {
     ogl.setup_input_callback((void*)key_callback);
 	ogl.ogl_link_world(&world);
-	bool sevenSeg[7] = {1, 1, 1, 1, 1, 1, 1};
+	bool a[7] = {0, 1, 1, 1, 1, 1, 1};
+	bool b[7] = {1, 1, 1, 1, 1, 1, 1};
+	bool c[7] = {1, 1, 0, 0, 1, 0, 1};
     // seven seg
-	int seven_seg_id = world.add_element(SevenSegment(sevenSeg, 0,0,0.1f,0.3f, Color(1,1,1)));
+	int a_id = world.add_element(SevenSegment(a, 0,0,0.1f,0.2f, Color(1,1,1)));
+	int b_id = world.add_element(SevenSegment(b, 0.12f,0,0.1f,0.2f, Color(1,1,1)));
+	int c_id = world.add_element(SevenSegment(c, 0.24f,0,0.1f,0.2f, Color(1,1,1)));
 
 	while (continue_flag) {
 		ogl.ogl_calc_vertex_array();
