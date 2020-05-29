@@ -1,10 +1,6 @@
 #include <math.h>
 #include "element.hpp"
 
-bool operator==(const Element& e, const Element& e2) {
-	return true;
-}
-
 
 
 int Element::translate(float x, float y) {
