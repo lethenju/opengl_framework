@@ -18,21 +18,21 @@ int main(void)
 	ogl.ogl_link_world(&world);
 	
 	// First element
-	world.add_element(Square(-1.0f,0,0.2f,0.2f, Color(0,1,0)));
+	int first_id = world.add_element(Square(-1.0f,0,0.2f,0.2f, Color(0,1,0)));
 	
 	// wall
-	world.add_element(Square(0.8f,-1.0f,0.1f,2.0f, Color(1,1,1)));
+	int wall_id = world.add_element(Square(0.8f,-1.0f,0.1f,2.0f, Color(1,1,1)));
 	
-	physics_manager.subscribe(world.get_element(0), 0, true); 
-	physics_manager.subscribe(world.get_element(1), 0, false); 
+	physics_manager.subscribe(world.get_element(first_id), 0, true); 
+	physics_manager.subscribe(world.get_element(wall_id), 0, false); 
     float velocity = 0.1f;
 	physics_manager.set_velocity(world.get_element(0), velocity,0);
 
 	ogl.ogl_calc_vertex_array();
 	physics_manager.start();
 	while (continue_flag) {	
-		Element* first_element = world.get_element(0);
-		Element* wall          = world.get_element(1);
+		Element* first_element = world.get_element(first_id);
+		Element* wall          = world.get_element(wall_id);
 		physics_manager.handle_collisions(&physics_manager.physics_subscribed_elements.at(0), physics_manager.get_velocity(first_element)[0], 0);
 
 

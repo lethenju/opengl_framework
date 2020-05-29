@@ -3,22 +3,19 @@
 #include <cstdint>
 #include <cstring>
 
+static int ID_gen = 0;
+
 int Ogl_world::add_element(Element new_element)
 {
 
-	this->elements.push_back(new_element);
-	return 0;
+	ID_gen++;
+	this->elements.insert(std::pair<int, Element>(ID_gen, new_element));
+	return ID_gen;
 }
 
-int Ogl_world::remove_element(Element element_to_remove)
+int Ogl_world::remove_element(int element_ID)
 {
-	for (int count = 0; count < this->elements.size(); count++) {
-		if (this->elements.at(count) == element_to_remove) {
-			this->elements.erase(this->elements.begin()+count);
-			return 0;
-		}
-	}
-	return -1; // element not found
+	this->elements.erase(element_ID);
 }
 
 int Ogl_world::set_background(Color new_background) {
@@ -33,29 +30,25 @@ Color Ogl_world::get_background() {
 Element* Ogl_world::get_element(Coordinates coord)
 {
 	for (auto& element : this->elements) {
-		for (auto& triangle : element) {
+		for (auto& triangle : std::get<1>(element)){
 			if (triangle.is_inside(coord)) {
-				return &element;
+				return &std::get<1>(element);
 			}
 		}	
 	}
 	return nullptr;
 }
 
-Element* Ogl_world::get_element(int nb)
+Element* Ogl_world::get_element(int id)
 {
-	return &(this->elements.at(nb));
+	return &(this->elements.at(id));
 }
 
 
-const std::vector<Element> Ogl_world::get_elements()
-{
-	return this->elements;
-}
 int Ogl_world::get_raw_coord_array_size() {
 	int count = 0;
 	for (auto& elem : this->elements) {
-		count+= elem.size() * 3 * 2;
+		count+= std::get<1>(elem).size() * 3 * 2;
 	}
 	return count;
 }
@@ -63,7 +56,7 @@ int Ogl_world::get_raw_coord_array_size() {
 int Ogl_world::get_raw_coord_array(float* pointer_to_tab) {
 	int i = 0;
 	for (auto& element : this->elements) {
-		for (auto& triangle : element) {
+		for (auto& triangle : std::get<1>(element)) {
 			for (auto& coord : triangle.coordinates) {
 
 				std::memcpy(pointer_to_tab+i  , &(coord.x), sizeof(float));
@@ -78,7 +71,7 @@ int Ogl_world::get_raw_coord_array(float* pointer_to_tab) {
 int Ogl_world::get_raw_color_array(float* pointer_to_tab) {
 	int i = 0;
 	for (auto& element : this->elements) {
-		for (auto& triangle : element) {
+		for (auto& triangle : std::get<1>(element)) {
 			std::memcpy(pointer_to_tab+i  ,&(triangle.color.r), sizeof(float));
 			std::memcpy(pointer_to_tab+i+1,&(triangle.color.v), sizeof(float));
 			std::memcpy(pointer_to_tab+i+2,&(triangle.color.b), sizeof(float));

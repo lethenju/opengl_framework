@@ -1,6 +1,7 @@
 #pragma once
 #include "coordinates.hpp"
 #include "element.hpp"
+#include <map>
 /**
  * Represent the 2D "world" with primarily a list of elements.
  */ 
@@ -16,15 +17,15 @@ public:
 	 *  @param new_element : the new element to add in the world. It will copy it, so the previous lvalue can be freed.
 	 *                       You can use (and its actually better) rvalue with directly creating a new element in add_element
 	 * 						 like so : world.add_element(Element(...)); or any derived element class from geom
-	 *  @return Error code, 0 if it worked, -1 if it didnt.
+	 *  @return the ID of the created element
 	 */
 	int add_element(Element new_element);
 	
 	/** Remove an element from the world. 
-	 *  @param element_to_remove : The old element to be removed from the world.
+	 *  @param element_ID : The old element ID to be removed from the world.
 	 *  @return Error code, 0 if it worked, -1 if it didnt.
 	 */
-	int remove_element(Element element_to_remove);
+	int remove_element(int element_ID);
 	
 	/** Gets an element from the coordinates given
 	 *  @param coord : The coordinates of the element 
@@ -33,16 +34,10 @@ public:
 	Element* get_element(Coordinates coord);
 	
 	/** Gets an element from the index in the list of elements
-	 *  @param nb : Index of the element to retrieve
+	 *  @param id : ID of the element to retrieve
 	 *  @return A pointer to the element found.
 	 */
-	Element* get_element(int nb);
-
-	/** Return an ro version of the element list 
-	 * (to prevent modification from outside the class.. We can expose our world but not expose the ways to modify it
-	 * @returns ro version of the element list.
-	 */
-	const std::vector<Element> get_elements();
+	Element* get_element(int id);
 
 	/**
 	 * @returns The size of the raw coord array that is built in get_raw_coord_array
@@ -74,7 +69,7 @@ public:
 private:
 	/** List of elements contained in the world.
 	 */  
-	std::vector<Element> elements;
+	std::map<int, Element> elements;
 	
 	/** Background color of the world.
 	 */  

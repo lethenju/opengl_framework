@@ -17,8 +17,9 @@ int main(void)
 	ogl.ogl_link_world(&world);
 
     // square
-	world.add_element(Square(0,0,0.2f,0.2f, Color(0,1,0)));
-	
+	int square_id = world.add_element(Square(0,0,0.2f,0.2f, Color(0,1,0)));
+	Element* square = world.get_element(square_id);
+
 	// circle
 	world.add_element(Circle(0.5f,0,0.2f, Color(0,1,1)));
 	
@@ -31,11 +32,12 @@ int main(void)
 	// line
 	world.add_element(Line(-0.9f,-0.8f,
 						   -0.4f,-0.7f, 0.005f, Color(0.8f,1,0.2f)));
+	//Element* line = world.get_element(0);
+
 
 	while (continue_flag) {
-		Element* square = world.get_element(0);
 		Coordinates center = square->get_center();
-		square->rotate(center, 0.01f);
+		square->rotate(Coordinates{0,0}, 0.01f);
 		ogl.ogl_calc_vertex_array();
 		ogl.ogl_redraw();
 		usleep(500);
