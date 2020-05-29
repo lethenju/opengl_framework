@@ -18,7 +18,7 @@ int main(void)
 	ogl.ogl_link_world(&world);
 
     // square
-	int square_id = world.add_element(Square(0,0,0.2f,0.2f, Color(0,1,0)));
+	int square_id = world.add_element(Rectangle(0,0,0.2f,0.2f, Color(0,1,0)));
 
 	// circle
 	int circle_id = world.add_element(Circle(0.5f,0,0.2f, Color(0,1,1)));

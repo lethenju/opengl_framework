@@ -19,17 +19,17 @@ int main(void)
 	ogl.ogl_link_world(&world);
 	for (float a = -0.70f ; a < 0.80f; a += 0.1f) {
 		for (float b = -0.70f ; b < 0.80f; b += 0.1f) {
-			world.add_element(Square(0.01f+a,0.01f+b,0.08f,0.08f, Color(0.1f,0.1f,0.1f)));
+			world.add_element(Rectangle(0.01f+a,0.01f+b,0.08f,0.08f, Color(0.1f,0.1f,0.1f)));
 		}
 	}
 	// First element
-	square_id = world.add_element(Square(0.01f,0.01f,0.08f,0.08f, Color(1,1,1)));
+	square_id = world.add_element(Rectangle(0.01f,0.01f,0.08f,0.08f, Color(1,1,1)));
 	
 	// walls
-	int wall_1_id = world.add_element(Square(0.8f,-0.8f,0.1f,1.6f, Color(0.5f,0.5f,0.5f)));
-	int wall_2_id = world.add_element(Square(-0.8f,-0.8f,1.6f,0.1f, Color(0.5f,0.5f,0.5f)));
-	int wall_3_id = world.add_element(Square(-0.8f,-0.8f,0.1f,1.6f, Color(0.5f,0.5f,0.5f)));
-	int wall_4_id = world.add_element(Square(-0.8f,0.8f,1.7f,0.1f, Color(0.5f,0.5f,0.5f)));
+	int wall_1_id = world.add_element(Rectangle(0.8f,-0.8f,0.1f,1.6f, Color(0.5f,0.5f,0.5f)));
+	int wall_2_id = world.add_element(Rectangle(-0.8f,-0.8f,1.6f,0.1f, Color(0.5f,0.5f,0.5f)));
+	int wall_3_id = world.add_element(Rectangle(-0.8f,-0.8f,0.1f,1.6f, Color(0.5f,0.5f,0.5f)));
+	int wall_4_id = world.add_element(Rectangle(-0.8f,0.8f,1.7f,0.1f, Color(0.5f,0.5f,0.5f)));
 
 
 

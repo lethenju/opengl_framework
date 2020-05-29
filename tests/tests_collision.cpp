@@ -18,10 +18,10 @@ int main(void)
 	ogl.ogl_link_world(&world);
 	
 	// First element
-	int first_id = world.add_element(Square(-1.0f,0,0.2f,0.2f, Color(0,1,0)));
+	int first_id = world.add_element(Rectangle(-1.0f,0,0.2f,0.2f, Color(0,1,0)));
 	
 	// wall
-	int wall_id = world.add_element(Square(0.8f,-1.0f,0.1f,2.0f, Color(1,1,1)));
+	int wall_id = world.add_element(Rectangle(0.8f,-1.0f,0.1f,2.0f, Color(1,1,1)));
 	
 	physics_manager.subscribe(world.get_element(first_id), 0, true); 
 	physics_manager.subscribe(world.get_element(wall_id), 0, false); 

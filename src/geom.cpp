@@ -2,7 +2,7 @@
 #include "geom.hpp"
 #include <cmath>
 
-Square::Square(float x, float y, float width, float height, Color color) {
+Rectangle::Rectangle(float x, float y, float width, float height, Color color) {
     this->push_back(Triangle(Coordinates{x,y}, Coordinates{x+width, y},  Coordinates{x+width, y+height}, color));
     this->push_back(Triangle(Coordinates{x,y+height}, Coordinates{x, y},  Coordinates{x+width, y+height}, color));
 }

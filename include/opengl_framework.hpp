@@ -165,11 +165,11 @@ private:
 void my_physics_thread(Physics *physics_manager);
 
 /**
- * Represent a Square, as an Element
+ * Represent a Rectangle, as an Element
  */
-class Square : public Element {
+class Rectangle : public Element {
 public:
-    Square(float x, float y, float width, float height, Color color);
+    Rectangle(float x, float y, float width, float height, Color color);
 };
 
 /**

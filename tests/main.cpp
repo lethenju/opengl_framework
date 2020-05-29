@@ -23,19 +23,19 @@ int main(void)
 	physics_manager.subscribe(world.get_element(ball_id), 0, true); 
 	
 	// left pad
-	left_pad_id = world.add_element(Square(-1,-0.5,0.1f,0.5f, Color(1,1,1)));
+	left_pad_id = world.add_element(Rectangle(-1,-0.5,0.1f,0.5f, Color(1,1,1)));
 	physics_manager.subscribe(world.get_element(left_pad_id), 0, true); 
 	
 	// right pad
-	int right_pad_id =world.add_element(Square(1-0.1f,-0.5,0.1f,0.5f, Color(1,1,1)));
+	int right_pad_id =world.add_element(Rectangle(1-0.1f,-0.5,0.1f,0.5f, Color(1,1,1)));
 	physics_manager.subscribe(world.get_element(right_pad_id), 0, true); 
 
 	// bottom wall
-	int bottom_wall_id = world.add_element(Square(-1,-1,2,0.05f, Color(1,1,1)));
+	int bottom_wall_id = world.add_element(Rectangle(-1,-1,2,0.05f, Color(1,1,1)));
 	physics_manager.subscribe(world.get_element(bottom_wall_id), 0, false);
 
 	// top wall
-	int top_wall_id = world.add_element(Square(-1,0.95f,2,0.05f, Color(1,1,1)));
+	int top_wall_id = world.add_element(Rectangle(-1,0.95f,2,0.05f, Color(1,1,1)));
 	physics_manager.subscribe(world.get_element(top_wall_id), 0, false); 
 
  

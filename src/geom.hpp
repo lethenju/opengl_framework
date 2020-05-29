@@ -1,8 +1,8 @@
 #include "element.hpp"
 
-class Square : public Element {
+class Rectangle : public Element {
 public:
-    Square(float x, float y, float width, float height, Color color);
+    Rectangle(float x, float y, float width, float height, Color color);
 };
 
 class Circle : public Element {
