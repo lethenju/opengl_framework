@@ -18,26 +18,34 @@ int main(void)
 
     // square
 	int square_id = world.add_element(Square(0,0,0.2f,0.2f, Color(0,1,0)));
-	Element* square = world.get_element(square_id);
 
 	// circle
-	world.add_element(Circle(0.5f,0,0.2f, Color(0,1,1)));
+	int circle_id = world.add_element(Circle(0.5f,0,0.2f, Color(0,1,1)));
 	
 	// tetragon
-	world.add_element(Tetragon(-0.7f,-0.2f,
+	int tetragon_id = world.add_element(Tetragon(-0.7f,-0.2f,
                                -0.4f,-0.02f,
                                -0.3f, 0.3f,
                                -0.8f, 0.1f, Color(1,1,0)));
 
 	// line
-	world.add_element(Line(-0.9f,-0.8f,
+	int line_id = world.add_element(Line(-0.9f,-0.8f,
 						   -0.4f,-0.7f, 0.005f, Color(0.8f,1,0.2f)));
-	//Element* line = world.get_element(0);
+	
+	
 
 
 	while (continue_flag) {
-		Coordinates center = square->get_center();
-		square->rotate(Coordinates{0,0}, 0.01f);
+		Coordinates center_square =  world.get_element(square_id)->get_center();
+		world.get_element(square_id)->rotate(center_square, 0.02f);
+		
+		Coordinates center_line = world.get_element(line_id)->get_center();
+		world.get_element(line_id)->rotate(center_line, 0.03f);
+
+		// Rotate around the square
+		world.get_element(tetragon_id)->rotate(center_square, 0.04f);
+		world.get_element(circle_id)->rotate(center_square, 0.01f);
+
 		ogl.ogl_calc_vertex_array();
 		ogl.ogl_redraw();
 		usleep(500);
