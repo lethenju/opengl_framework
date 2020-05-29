@@ -151,3 +151,19 @@ target_link_libraries(test_geom_exe
 	opengl_framework
 )	
 
+
+
+set(TEST_RESIZE_SOURCE_FILES
+	tests/tests_resize.cpp
+)
+
+add_executable(tests_resize_exe
+	${TESTS_INCLUDE_FILE}
+	${TEST_RESIZE_SOURCE_FILES}
+)
+
+target_link_libraries(tests_resize_exe
+	opengl_framework
+)	
+
+
