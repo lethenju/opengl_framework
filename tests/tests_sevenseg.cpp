@@ -23,12 +23,12 @@ int main(void)
 	bool e[7] = {1, 1, 0, 1, 1, 0, 1};
 	bool f[7] = {0, 1, 0, 1, 1, 0, 1};
     // seven seg
-	int a_id = world.add_element(SevenSegment(a, 0,0,0.1f,0.2f, Color(1,1,1)));
-	int b_id = world.add_element(SevenSegment(b, 0.12f,0,0.1f,0.2f, Color(0.9f,1,1)));
-	int c_id = world.add_element(SevenSegment(c, 0.24f,0,0.1f,0.2f, Color(0.8f,1,1)));
-	int d_id = world.add_element(SevenSegment(d, 0.36f,0,0.1f,0.2f, Color(0.7f,1,1)));
-	int e_id = world.add_element(SevenSegment(e, 0.48f,0,0.1f,0.2f, Color(0.6f,1,1)));
-	int f_id = world.add_element(SevenSegment(f, 0.60f,0,0.1f,0.2f, Color(0.5f,1,1)));
+	int a_id = world.add_element(SevenSegment(a, 0,0,0.1f,0.2f, Color(1,0,0)));
+	int b_id = world.add_element(SevenSegment(b, 0.12f,0,0.1f,0.2f, Color(0,1,1)));
+	int c_id = world.add_element(SevenSegment(c, 0.24f,0,0.1f,0.2f, Color(0.8f,1,0.5f)));
+	int d_id = world.add_element(SevenSegment(d, 0.36f,0,0.1f,0.2f, Color(0.7f,0.5f,1)));
+	int e_id = world.add_element(SevenSegment(e, 0.48f,0,0.1f,0.2f, Color(0.5f,0.5f,1)));
+	int f_id = world.add_element(SevenSegment(f, 0.60f,0,0.1f,0.2f, Color(0,1,0.5f)));
 
 	while (continue_flag) {
 		ogl.ogl_calc_vertex_array();
