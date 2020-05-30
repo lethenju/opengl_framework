@@ -19,7 +19,7 @@ int main(void)
 	ogl.ogl_link_world(&world);
 	
 	// ball
-	int ball_id = world.add_element(Circle(0,0,0.08f, Color(0,1,0)));
+	int ball_id = world.add_element(Circle(0,0,0.03f, Color(0,1,0)));
 	physics_manager.subscribe(world.get_element(ball_id), 0, true); 
 	
 	// left pad
@@ -39,17 +39,39 @@ int main(void)
 	physics_manager.subscribe(world.get_element(top_wall_id), 0, false); 
 
  
-	physics_manager.set_velocity(world.get_element(ball_id),0.05f,0.05f);
+	physics_manager.set_velocity(world.get_element(ball_id),0.2f,0.2f);
 
 	ogl.ogl_calc_vertex_array();
 	physics_manager.start();
+	float mouseX, mouseY;
 	while (continue_flag) {	
-		Element* Ball_position = world.get_element(ball_id);
+		Element* ball = world.get_element(ball_id);
 		Element* IA_pad        = world.get_element(right_pad_id);
+		Element* left_pad      = world.get_element(left_pad_id);
+
+		// Win mechanics
+		if (ball->get_position().x < -1.0f) {
+			printf("IA Wins ! \n");
+			ball->set_position(0,0);
+		}
+
+
+		
+		// User input
+		ogl.ogl_get_mouse_position(&mouseX, &mouseY);
+		left_pad->set_position(left_pad->get_position().x, mouseY - left_pad->get_dimensions()[1]/2);
+
+
+		// IA input
 		float middle_IA_position = IA_pad->get_position().y + IA_pad->get_dimensions()[1]/2;
-		float middle_ball_position = Ball_position->get_position().y + Ball_position->get_dimensions()[1]/2;
+		float middle_ball_position = ball->get_position().y + ball->get_dimensions()[1]/2;
 		IA_pad->translate(0,middle_ball_position-middle_IA_position);
+
+		// Collision management
 		physics_manager.handle_collisions(&physics_manager.physics_subscribed_elements.at(2), 0,(middle_ball_position-middle_IA_position));
+
+
+		// Calc vertex and draw calls
 		ogl.ogl_calc_vertex_array();
 		ogl.ogl_redraw();
 		usleep(500);
