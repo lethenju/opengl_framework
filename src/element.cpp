@@ -43,6 +43,7 @@ int Element::resize(Coordinates resizePoint, float factorX, float factorY) {
 			coord.y = resizePoint.y + vect_y;
 		}
 	}
+	return 0;
 }
 
 Coordinates Element::get_center() {
@@ -93,6 +94,7 @@ int Element::rotate(Coordinates rotationPoint, float rad) {
 			
 		}
 	}
+	return 0;
 }
 
 bool Element::is_colliding_with(Element another_element) {

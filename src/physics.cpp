@@ -24,6 +24,7 @@ int Physics::subscribe (Element* e) {
 		e, true, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , this->gravity}
 	};
 	this->physics_subscribed_elements.push_back(*physicsElement);
+	return 0;
 }
 
 int Physics::subscribe (Element* e, float gravity) {
@@ -31,6 +32,7 @@ int Physics::subscribe (Element* e, float gravity) {
 		e, true, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , gravity}
 	};
 	this->physics_subscribed_elements.push_back(*physicsElement);
+	return 0;
 }
 
 int Physics::subscribe (Element* e, float gravity, bool movable) {
@@ -38,6 +40,7 @@ int Physics::subscribe (Element* e, float gravity, bool movable) {
 		e, movable, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , gravity}
 	};
 	this->physics_subscribed_elements.push_back(*physicsElement);
+	return 0;
 }
 
 int Physics::remove (Element* e) {
@@ -61,6 +64,7 @@ float Physics::get_gravity() {
 int Physics::set_gravity(float g) {
 	this->gravity = g;
 	// TODO update all elements with gravity
+	return 0;
 }
 
 
@@ -111,7 +115,7 @@ bool Physics::handle_collisions(PhysicsElement* element, float velocity_x, float
 			continue;
 		}
 		if (element->element->is_colliding_with(*second_element.element)){
-			std::cout << "Info : Collision" << std::endl;
+			//std::cout << "Info : Collision" << std::endl;
 			PhysicsElement *element_to_move, *other_one;
 			if (element->movable) {
 				element_to_move = element;
@@ -131,19 +135,19 @@ bool Physics::handle_collisions(PhysicsElement* element, float velocity_x, float
 				switch (direction) {
 					case 0 :
 						element->velocity[1] =  element->velocity[1] * -1;
-						std::cout << "Direction : up" << std::endl;
+						//std::cout << "Direction : up" << std::endl;
 						break;
 					case 1 :
 						std::cout << "Direction : right" << std::endl;
-						element->velocity[0] =  element->velocity[0] * -1;
+						//element->velocity[0] =  element->velocity[0] * -1;
 						break;
 					case 2 :
 						std::cout << "Direction : down" << std::endl;
-						element->velocity[1] =  element->velocity[1] * -1;
+						//element->velocity[1] =  element->velocity[1] * -1;
 						break;
 					case 3 :
 						std::cout << "Direction : left" << std::endl;
-						element->velocity[0] =  element->velocity[0] * -1;
+						//element->velocity[0] =  element->velocity[0] * -1;
 						break;
 					default:
 						break;

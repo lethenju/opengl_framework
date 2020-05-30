@@ -16,6 +16,7 @@ int Ogl_world::add_element(Element new_element)
 int Ogl_world::remove_element(int element_ID)
 {
 	this->elements.erase(element_ID);
+	return 0;
 }
 
 int Ogl_world::set_background(Color new_background) {
