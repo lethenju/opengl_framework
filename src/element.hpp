@@ -8,6 +8,8 @@ class Element : public std::vector<Triangle>
 {
 public:
     int translate(float x, float y);
+    int set_position(float x, float y);
+
     int resize(Coordinates resizePoint, float factorX, float factorY);
     int rotate(Coordinates rotationPoint, float rad);
     Coordinates get_center();

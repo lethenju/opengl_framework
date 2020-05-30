@@ -110,6 +110,7 @@ class Element : public std::vector<Triangle>
 {
 public:
     int translate(float x, float y);
+	int set_position(float x, float y);
 	int resize(Coordinates resizePoint, float factorX, float factorY);
     int rotate(Coordinates rotationPoint, float rad);
 	Coordinates get_center();
@@ -300,6 +301,7 @@ public:
 	int setup_window(int width, int height, const char* name);
 	int ogl_glew_init();
 	int ogl_redraw();
+	int ogl_get_mouse_position(float* x, float* y);
 
 	// Link a Ogl_world object for getting elements structure and prepare vertex buffers
 	int ogl_link_world(Ogl_world* world);

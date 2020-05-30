@@ -14,6 +14,24 @@ int Element::translate(float x, float y) {
 	return 0;
 }
 
+int Element::set_position(float x, float y) {
+	Coordinates vec = {0,0};
+	bool vec_set = false;
+	for (auto& triangle: *this) {
+		for (auto& coord : triangle.coordinates){
+			if (!vec_set) {
+				vec_set = true;
+				vec.x = x - coord.x;
+				vec.y = y - coord.y;
+
+			}
+
+			coord.x += vec.x;
+			coord.y += vec.y;
+		}
+	}
+	return 0;
+}
 int Element::resize(Coordinates resizePoint, float factorX, float factorY) {
 	for (auto& triangle: *this) {
 		for (auto& coord : triangle.coordinates){
