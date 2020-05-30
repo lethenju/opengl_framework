@@ -156,8 +156,16 @@ bool Physics::handle_collisions(PhysicsElement* element, float velocity_x, float
 }
 
 void my_physics_thread(Physics *physics_manager) {
+	
+	auto tp1 = std::chrono::system_clock::now();
+	auto tp2 = std::chrono::system_clock::now();
 	while (physics_manager->is_running()) {
-		usleep(5000);
+		tp2 = std::chrono::system_clock::now();
+		std::chrono::duration<float> elapsedTime = tp2 - tp1;
+		tp1 = tp2;
+		float fElapsedTime = elapsedTime.count();
+
+		usleep(5000 * fElapsedTime);
 		for (auto & element : physics_manager->physics_subscribed_elements){
 		
 			physics_manager->handle_collisions(&element,element.velocity[0]/10, element.velocity[1]/10);
