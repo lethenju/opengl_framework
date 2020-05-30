@@ -170,6 +170,7 @@ void my_physics_thread(Physics *physics_manager);
  */
 class Rectangle : public Element {
 public:
+    Rectangle();
     Rectangle(float x, float y, float width, float height, Color color);
 };
 
