@@ -56,13 +56,18 @@ int Ogl_wrapper::setup_window(int width, int height, const char* name)
 	return 0;
 }
 
-/*
-bool Ogl_wrapper::is_not_over()
-{
-	return (glfwGetKey(this->ogl_window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-		glfwWindowShouldClose(this->ogl_window) == 0);
+int Ogl_wrapper::ogl_get_mouse_position(float* x, float* y) {
+	double xpos, ypos;
+	glfwGetCursorPos( this->window, &xpos, &ypos);
+	int width, height;
+	glfwGetWindowSize(this->window, &width, &height);
+	// Transfer to -1 ; 1 coordinates system
+	*x = (float) 2*xpos/width - 1 ;
+	*y = (float) - (2*ypos/height - 1 );
+	printf("x = %f, y = %f\n", *x , *y);
 }
-*/
+
+
 int Ogl_wrapper::setup_input_callback(void* cb) {
 	glfwSetKeyCallback(this->window, (GLFWkeyfun) cb);
 
