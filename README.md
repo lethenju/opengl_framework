@@ -21,9 +21,21 @@ You first need cmake, and C++ compilation tools if you dont have it already :
 sudo apt install cmake make g++
 ```
 
-This repository does not include OpenGL, GLFW, and GLEW. They are absolutely needed to make it work.
+This repository does not include OpenGL.
 
 You can install OpenGL and the needed OpenGL libraries with the following command 
 ``` bash
 sudo apt install libx11-dev libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libxext-dev
 ```
+
+Then type the following commands to build the project : 
+
+```bash
+mkdir build
+cd build
+cmake ..
+cp -r ../include/* /usr/local/include
+sudo make install
+```
+
+And it should work fine.
