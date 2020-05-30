@@ -64,7 +64,7 @@ int Ogl_wrapper::ogl_get_mouse_position(float* x, float* y) {
 	// Transfer to -1 ; 1 coordinates system
 	*x = (float) 2*xpos/width - 1 ;
 	*y = (float) - (2*ypos/height - 1 );
-	printf("x = %f, y = %f\n", *x , *y);
+	return 0;
 }
 
 
