@@ -28,7 +28,7 @@ SOFTWARE.
 #include "shader.hpp"
 #include "ogl_wrapper.hpp"
 
-Ogl_wrapper::Ogl_wrapper(int width, int height, char* name) {
+Ogl_wrapper::Ogl_wrapper(int width, int height, const char* name) {
 	this->ogl_glfw_init();
 	this->setup_window(width, height, name);
 	this->ogl_glew_init();
@@ -86,13 +86,13 @@ int Ogl_wrapper::ogl_get_mouse_position(float* x, float* y) {
 	// Transfer to -1 ; 1 coordinates system
 	*x = (float) 2*xpos/width - 1 ;
 	*y = (float) - (2*ypos/height - 1 );
-	printf("x = %f, y = %f\n", *x , *y);
+	return 0;
 }
 
 
 int Ogl_wrapper::setup_input_callback(void* cb) {
 	glfwSetKeyCallback(this->window, (GLFWkeyfun) cb);
-
+	return 0;
 }
 
 int Ogl_wrapper::ogl_glew_init() {
