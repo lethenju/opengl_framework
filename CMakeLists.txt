@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.9)
-project (opengl_framework VERSION 0.1.0 DESCRIPTION "A simple OpenGL game library")
+project (opengl_framework VERSION 0.2.0 DESCRIPTION "A simple OpenGL game library")
 
 #[[ Building Library ]]
 
