@@ -7,7 +7,6 @@ include(GNUInstallDirs)
 
 set(CMAKE_BUILD_TYPE Debug)
 
-
 	#[[ Dependencies ]]
 
 find_package(OpenGL REQUIRED)
@@ -17,7 +16,6 @@ set(GLFW_LIBRARY "glfw" )
 
 set(GLEW_INCLUDE_PATH "" CACHE PATH "external/glew-1.13.0/include" )
 set(GLEW_LIBRARY "GLEW_1130" )
-
 
 include_directories(
 	GLFW_INCLUDE_PATH
@@ -32,7 +30,6 @@ set(ALL_LIBS
 	${GLFW_LIBRARY}
 	${GLEW_LIBRARY}
 )
-
 
 set(LIBRARY_HEADER_FILES
 	src/color.hpp
@@ -64,8 +61,6 @@ add_definitions(
 	-DGLEW_STATIC
 	-D_CRT_SECURE_NO_WARNINGS
 )
-	
-
 
 add_library(opengl_framework STATIC
 	${LIBRARY_HEADER_FILES}
@@ -87,9 +82,6 @@ install(TARGETS opengl_framework
     	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-
-
 #[[ Building Tests ]]
-
 
 add_subdirectory (tests/)
