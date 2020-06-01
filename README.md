@@ -36,6 +36,12 @@ cd build
 cmake ..
 cp -r ../include/* /usr/local/include
 sudo make install
+cp ../src/*.shader .
+```
+
+Then launch tests from the build dir : 
+```bash
+./tests/pong_exe
 ```
 
 And it should work fine.
