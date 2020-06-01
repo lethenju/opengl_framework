@@ -110,6 +110,19 @@ target_link_libraries(pong_exe
 	opengl_framework
 )	
 
+set(PLATFORMER_SOURCE_FILES
+	tests/platformer.cpp
+)
+
+add_executable(platformer_exe
+	${TESTS_INCLUDE_FILE}
+	${PLATFORMER_SOURCE_FILES}
+)
+
+target_link_libraries(platformer_exe
+	opengl_framework
+)	
+
 set(TEST_COLLISION_SOURCE_FILES
 	tests/tests_collision.cpp
 )
