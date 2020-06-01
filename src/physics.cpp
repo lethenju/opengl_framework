@@ -192,14 +192,14 @@ void my_physics_thread(Physics *physics_manager) {
 		tp1 = tp2;
 		float fElapsedTime = elapsedTime.count();
 
-		usleep(5000 * fElapsedTime);
+		usleep(50000 * fElapsedTime);
 		for (auto & element : physics_manager->physics_subscribed_elements){
 		
-			physics_manager->handle_collisions(&element,element.velocity[0]/10, element.velocity[1]/10);
-			element.element->translate(element.velocity[0]/10, element.velocity[1]/10);
+			physics_manager->handle_collisions(&element,element.velocity[0]/100, element.velocity[1]/100);
+			element.element->translate(element.velocity[0]/100, element.velocity[1]/100);
 				// Should be great to override += for std::array
-			element.velocity[0] += element.acceleration[0]/10;
-			element.velocity[1] += element.acceleration[1]/10;
+			element.velocity[0] += element.acceleration[0]/100;
+			element.velocity[1] += element.acceleration[1]/100;
 		}
 	}
 }
