@@ -91,22 +91,22 @@ install(TARGETS opengl_framework
 
 #[[ Building Tests ]]
 
-	#[[ Compiling Main ]]
-
-set(TESTS_SOURCE_FILES
-	tests/main.cpp
-)
-
 set(TESTS_INCLUDE_FILE
 	include/opengl_framework.hpp
 )
 
-add_executable(test_exe
-	${TESTS_INCLUDE_FILE}
-	${TESTS_SOURCE_FILES}
+	#[[ Compiling Pong ]]
+
+set(PONG_SOURCE_FILES
+	tests/pong.cpp
 )
 
-target_link_libraries(test_exe
+add_executable(pong_exe
+	${TESTS_INCLUDE_FILE}
+	${PONG_SOURCE_FILES}
+)
+
+target_link_libraries(pong_exe
 	opengl_framework
 )	
 
@@ -150,8 +150,6 @@ add_executable(test_geom_exe
 target_link_libraries(test_geom_exe
 	opengl_framework
 )	
-
-
 
 set(TEST_RESIZE_SOURCE_FILES
 	tests/tests_resize.cpp
