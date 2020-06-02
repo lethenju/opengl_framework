@@ -143,51 +143,22 @@ bool Element::is_colliding_with(Element another_element) {
 // Return where my element is compared to the another element
 // 0 if up, 1 if right, 2 if down, 3 if left
 int Element::get_direction(Element another_element) {
+	Coordinates c = this->get_center();
+	Coordinates c2 = another_element.get_center();
 
-	// I need to count how many of my points are strictly to the top / right / left and bottom of ALL of the points of the other element.
-	
-	int global_down_score = 0;
-	int global_up_score = 0 ;
-	int global_right_score = 0 ;
-	int global_left_score = 0 ;
-
-	int down_score = 0;
-	int up_score = 0 ;
-	int right_score = 0 ;
-	int left_score = 0 ;
-	int maximum = 0;
-	// For each of my coordinates
-	for (auto my_triangle : *this) {
-		for (auto my_coord : my_triangle.coordinates) {
-			down_score = 0;
-			up_score = 0 ;
-			right_score = 0 ;
-			left_score = 0 ;
-		
-			// For each of his coordinates
-			for (auto other_elem_triangle : another_element) {
-				for (auto other_elem_coord : other_elem_triangle.coordinates) {
-					left_score +=  (other_elem_coord.x > my_coord.x);
-					right_score +=  (other_elem_coord.x < my_coord.x);
-					up_score +=  (other_elem_coord.y > my_coord.y);
-					down_score +=  (other_elem_coord.y < my_coord.y);
-					
-				}
-			}
-
-			maximum = std::max(std::max(down_score, up_score),std::max(left_score, right_score));
-			global_up_score += (maximum == up_score);
-			global_down_score += (maximum == down_score);
-			global_right_score += (maximum == right_score); 
-			global_left_score += (maximum == left_score) ;
-		}
+	float x_diff = c2.x - c.x;
+	float y_diff = c2.y - c.y;
+	if (abs(x_diff) > abs(y_diff)) {
+		if (x_diff > 0) 
+			return 1;
+		else 
+			return 3;	
 	}
-
-	maximum = std::max(std::max(global_up_score, global_down_score),std::max(global_right_score, global_left_score));
-	if (maximum == global_up_score) return 0;
-	if (maximum == global_right_score) return 1;
-	if (maximum == global_down_score) return 2;
-	return 3;
+	if (y_diff > 0) 
+		return 0;
+	else 
+		return 2;
+	
 }
 
 
