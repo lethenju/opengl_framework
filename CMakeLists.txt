@@ -41,6 +41,7 @@ set(LIBRARY_HEADER_FILES
 	src/triangle.hpp
 	src/geom.hpp
 	src/physics.hpp
+	src/cute_c2.h
 )
 
 set(LIBRARY_SOURCE_FILES

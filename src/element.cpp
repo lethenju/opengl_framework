@@ -23,6 +23,7 @@ SOFTWARE.
 */
 #include <math.h>
 #include "element.hpp"
+#include "cute_c2.h"
 
 
 
@@ -121,28 +122,47 @@ int Element::rotate(Coordinates rotationPoint, float rad) {
 }
 
 bool Element::is_colliding_with(Element another_element) {
-	for (auto my_triangle : *this) {
-		for (auto other_elem_triangle : another_element) {
-			for (auto coord : other_elem_triangle.coordinates) {
-				// If a coordinate of the another element object is inside my triangle
-				if (my_triangle.is_inside(coord)) { 
-					return true;
-				}
-			}
-			for (auto coord : my_triangle.coordinates) {
-				// If a coordinate of my element object is inside the other element
-				if (other_elem_triangle.is_inside(coord)) { 
-					return true;
-				}
-			}
-		}
-	}
-	return false;
+	
+	c2AABB element_box;
+	element_box.min.x = this->get_position().x;
+	element_box.min.y = this->get_position().y;
+	element_box.max.x = this->get_position().x + this->get_dimensions()[0];
+	element_box.max.y = this->get_position().y + this->get_dimensions()[1];
+
+
+	c2AABB other_element;
+	other_element.min.x = another_element.get_position().x;
+	other_element.min.y = another_element.get_position().y;
+	other_element.max.x = another_element.get_position().x + another_element.get_dimensions()[0];
+	other_element.max.y = another_element.get_position().y + another_element.get_dimensions()[1];
+
+	int collide = c2AABBtoAABB(element_box, other_element);
+	
+	return (collide > 0);
 }
 
 // Return where my element is compared to the another element
 // 0 if up, 1 if right, 2 if down, 3 if left
 int Element::get_direction(Element another_element) {
+	
+	c2AABB element_box;
+	element_box.min.x = this->get_position().x;
+	element_box.min.y = this->get_position().y;
+	element_box.max.x = this->get_position().x + this->get_dimensions()[0];
+	element_box.max.y = this->get_position().y + this->get_dimensions()[1];
+
+
+	c2AABB other_element;
+	other_element.min.x = another_element.get_position().x;
+	other_element.min.y = another_element.get_position().y;
+	other_element.max.x = another_element.get_position().x + another_element.get_dimensions()[0];
+	other_element.max.y = another_element.get_position().y + another_element.get_dimensions()[1];
+
+	c2Manifold m;
+	c2AABBtoAABBManifold(element_box, other_element, &m);
+	
+	
+	/*
 	Coordinates c = this->get_center();
 	Coordinates c2 = another_element.get_center();
 
@@ -158,6 +178,7 @@ int Element::get_direction(Element another_element) {
 		return 0;
 	else 
 		return 2;
+		*/
 	
 }
 

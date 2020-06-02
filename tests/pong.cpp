@@ -62,7 +62,7 @@ int main(void)
 	physics_manager.subscribe(world.get_element(top_wall_id), 0, false); 
 
  
-	physics_manager.set_velocity(world.get_element(ball_id),1,1);
+	physics_manager.set_velocity(world.get_element(ball_id),0.2f,0.2f);
 
 	ogl.ogl_calc_vertex_array();
 	physics_manager.start();
