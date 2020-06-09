@@ -161,24 +161,24 @@ int Element::get_direction(Element another_element) {
 	c2Manifold m;
 	c2AABBtoAABBManifold(element_box, other_element, &m);
 	
+	Coordinates contact1 = Coordinates{m.contact_points[0].x,m.contact_points[0].y};
+	Coordinates contact2 = Coordinates{m.contact_points[1].x,m.contact_points[1].y};
 	
-	/*
-	Coordinates c = this->get_center();
-	Coordinates c2 = another_element.get_center();
-
-	float x_diff = c2.x - c.x;
-	float y_diff = c2.y - c.y;
-	if (abs(x_diff) > abs(y_diff)) {
-		if (x_diff > 0) 
-			return 1;
-		else 
-			return 3;	
-	}
-	if (y_diff > 0) 
+	Coordinates top_left = this->get_position();
+	Coordinates top_right = Coordinates{ top_left.x+this->get_dimensions()[0] ,top_left.y};
+	Coordinates bottom_left = Coordinates{ top_left.x ,top_left.y-this->get_dimensions()[1]};
+	Coordinates bottom_right = Coordinates{  top_left.x+this->get_dimensions()[0] ,top_left.y+this->get_dimensions()[1]};
+	
+	if  (contact1 == top_left && contact2 == top_right) {
 		return 0;
-	else 
+	} else if (contact1 == top_left && contact2 == bottom_left) {
+		return 3;
+	} else if (contact1 == bottom_left && contact2 == bottom_right) {
 		return 2;
-		*/
+	} else {
+		return 1;
+	}
+
 	
 }
 
