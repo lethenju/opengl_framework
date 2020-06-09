@@ -49,7 +49,7 @@ int main(void)
 	physics_manager.subscribe(world.get_element(first_id), 0, true); 
 	physics_manager.subscribe(world.get_element(wall_id), 0, false); 
     float velocity = 0.1f;
-	physics_manager.set_velocity(world.get_element(0), velocity,0);
+	physics_manager.set_velocity(world.get_element(first_id), velocity,0);
 
 	ogl.ogl_calc_vertex_array();
 	physics_manager.start();

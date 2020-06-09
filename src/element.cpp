@@ -164,10 +164,10 @@ int Element::get_direction(Element another_element) {
 	Coordinates contact1 = Coordinates{m.contact_points[0].x,m.contact_points[0].y};
 	Coordinates contact2 = Coordinates{m.contact_points[1].x,m.contact_points[1].y};
 	
-	Coordinates top_left = this->get_position();
-	Coordinates top_right = Coordinates{ top_left.x+this->get_dimensions()[0] ,top_left.y};
-	Coordinates bottom_left = Coordinates{ top_left.x ,top_left.y-this->get_dimensions()[1]};
-	Coordinates bottom_right = Coordinates{  top_left.x+this->get_dimensions()[0] ,top_left.y+this->get_dimensions()[1]};
+	Coordinates top_left = another_element.get_position();
+	Coordinates top_right = Coordinates{ top_left.x+another_element.get_dimensions()[0] ,top_left.y};
+	Coordinates bottom_left = Coordinates{ top_left.x ,top_left.y-another_element.get_dimensions()[1]};
+	Coordinates bottom_right = Coordinates{  top_left.x+another_element.get_dimensions()[0] ,top_left.y+another_element.get_dimensions()[1]};
 	
 	if  (contact1 == top_left && contact2 == top_right) {
 		return 0;
