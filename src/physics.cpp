@@ -147,7 +147,7 @@ bool Physics::handle_collisions(PhysicsElement* element, float velocity_x, float
 				element_to_move = &second_element;
 				other_one = element;
 			} else {
-				std::cout << "Warning : Both colliding objects are non movable.." << std::endl;
+				//Both colliding objects are non movable..
 				continue;
 			}
 			// Go back
