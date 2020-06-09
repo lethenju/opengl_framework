@@ -154,26 +154,31 @@ bool Physics::handle_collisions(PhysicsElement* element, float velocity_x, float
 			element_to_move->element->translate(-velocity_x, -velocity_y);
 
 			if (element->velocity[0] != 0 || element->velocity[1] != 0) {
-				int direction = element_to_move->element->get_direction(*other_one->element);
-				switch (direction) {
-					case 0 :
-						element->velocity[1] =  element->velocity[1] * -1;
-						std::cout << "Direction : up" << std::endl;
-						break;
-					case 1 :
-						std::cout << "Direction : right" << std::endl;
+				/* need to check direction to go -> 
+				   now technically we are not in collision state.
+				   Try to advance only x 
+				      -> If we have a collision it means we need to invert x
+				   Try to advance only y
+				      -> If we have a collision it means we need to invert y
+					
+				*/
+
+				// Check if we need to inverse x
+				element_to_move->element->translate(velocity_x , 0);
+				if (element_to_move->element->is_colliding_with(*other_one->element)) {
+						// inverse X velocity
 						element->velocity[0] =  element->velocity[0] * -1;
-						break;
-					case 2 :
-						std::cout << "Direction : down" << std::endl;
+						// return to not colliding state
+						element_to_move->element->translate(-velocity_x , 0);
+				}
+				
+				// Check if we need to inverse y
+				element_to_move->element->translate(0 , velocity_y);
+				if (element_to_move->element->is_colliding_with(*other_one->element)) {
+						// inverse Y velocity
 						element->velocity[1] =  element->velocity[1] * -1;
-						break;
-					case 3 :
-						std::cout << "Direction : left" << std::endl;
-						element->velocity[0] =  element->velocity[0] * -1;
-						break;
-					default:
-						break;
+						// return to not colliding state
+						element_to_move->element->translate(-velocity_y , 0);
 				}
 			}
 			rv =  true;
