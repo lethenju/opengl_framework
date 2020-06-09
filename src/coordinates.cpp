@@ -23,6 +23,10 @@ SOFTWARE.
 */
 #include "coordinates.hpp"
 
+bool operator==(const Coordinates& c1, const Coordinates& c2) {
+    return (c1.x == c2.x) && (c1.y == c2.y);
+}
+
 bool operator<(const Coordinates& c1, const Coordinates& c2) {
     return (c1.x + c1.y) < (c2.x + c2.y);
 }
