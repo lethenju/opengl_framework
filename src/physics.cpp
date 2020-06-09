@@ -158,19 +158,19 @@ bool Physics::handle_collisions(PhysicsElement* element, float velocity_x, float
 				switch (direction) {
 					case 0 :
 						element->velocity[1] =  element->velocity[1] * -1;
-						//std::cout << "Direction : up" << std::endl;
+						std::cout << "Direction : up" << std::endl;
 						break;
 					case 1 :
 						std::cout << "Direction : right" << std::endl;
-						//element->velocity[0] =  element->velocity[0] * -1;
+						element->velocity[0] =  element->velocity[0] * -1;
 						break;
 					case 2 :
 						std::cout << "Direction : down" << std::endl;
-						//element->velocity[1] =  element->velocity[1] * -1;
+						element->velocity[1] =  element->velocity[1] * -1;
 						break;
 					case 3 :
 						std::cout << "Direction : left" << std::endl;
-						//element->velocity[0] =  element->velocity[0] * -1;
+						element->velocity[0] =  element->velocity[0] * -1;
 						break;
 					default:
 						break;
