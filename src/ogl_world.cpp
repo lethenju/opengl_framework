@@ -25,6 +25,7 @@ SOFTWARE.
 
 #include <cstdint>
 #include <cstring>
+#include <iostream>
 
 static int ID_gen = 0;
 
@@ -65,7 +66,12 @@ Element* Ogl_world::get_element(Coordinates coord)
 
 Element* Ogl_world::get_element(int id)
 {
-	return &(this->elements.at(id));
+	if (this->elements.find(id) == this->elements.end()) {
+		std::cout << "ERROR : seeking element of ID " << id << " does not exist " << std::endl;
+		return nullptr;
+	} else {
+		return &(this->elements.at(id));
+	}
 }
 
 
