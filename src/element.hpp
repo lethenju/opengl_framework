@@ -40,6 +40,10 @@ public:
     std::array<float,2>  get_dimensions();
     bool is_colliding_with(Element another_element);
 
+    int set_stickyness(float s);
+    float get_stickyness();
+private:
+    float stickyness = 0;
 };
 
 bool operator==(const Element& e1, const Element& e2);

@@ -175,3 +175,13 @@ std::array<float,2>  Element::get_dimensions() {
 	return bottom_right - position;
 }
 
+int Element::set_stickyness(float s) {
+	// stickiness should be included between 0 and 1
+	if (s < 0 || s > 1) {
+		return -1;
+	}
+	this->stickyness = s;
+}
+float Element::get_stickyness() {
+	return this->stickyness;
+}

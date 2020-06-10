@@ -45,6 +45,7 @@ int main(void)
 	player_id = world.add_element(Rectangle(0,0,0.05f,0.05f, Color(0,1,0)));
 	physics_manager.subscribe(world.get_element(player_id), -0.05f, true); 
 	
+	world.get_element(player_id)->set_stickyness(0.9f);
 
 	// plateform
 	int bottom_wall_id = world.add_element(Rectangle(-1,-1,2,0.05f, Color(1,1,1)));
@@ -64,9 +65,6 @@ int main(void)
 	physics_manager.start();
 	while (continue_flag) {	
         std::cout << "X : " << world.get_element(player_id)->get_position().x << " | Y : " << world.get_element(player_id)->get_position().y << std::endl;
-	
-
-
 		// Calc vertex and draw calls
 		ogl.ogl_calc_vertex_array();
 		ogl.ogl_redraw();
