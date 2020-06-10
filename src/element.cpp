@@ -141,58 +141,6 @@ bool Element::is_colliding_with(Element another_element) {
 	
 	return (collide > 0);
 }
-/*
-// Return where my element is compared to the another element
-// 0 if up, 1 if right, 2 if down, 3 if left
-int Element::get_direction(Element another_element) {
-	
-	c2AABB element_box;
-	element_box.min.x = this->get_position().x;
-	element_box.min.y = this->get_position().y;
-	element_box.max.x = this->get_position().x + this->get_dimensions()[0];
-	element_box.max.y = this->get_position().y + this->get_dimensions()[1];
-
-
-	c2AABB other_element;
-	other_element.min.x = another_element.get_position().x;
-	other_element.min.y = another_element.get_position().y;
-	other_element.max.x = another_element.get_position().x + another_element.get_dimensions()[0];
-	other_element.max.y = another_element.get_position().y + another_element.get_dimensions()[1];
-
-	c2Manifold m;
-	c2AABBtoAABBManifold(element_box, other_element, &m);
-	
-		std::cout << "m.count = " << m.count << std::endl;
-
-	
-		Coordinates contact1 = Coordinates{m.contact_points[0].x,m.contact_points[0].y};
-		Coordinates contact2 = Coordinates{m.contact_points[1].x,m.contact_points[1].y};
-		std::cout << "contact 1 ( " << contact1.x << " : " << contact1.y << " ) ";
-		std::cout << "contact 2 ( " << contact2.x << " : " << contact2.y << " ) " << std::endl;
-
-		
-		Coordinates top_left = this->get_position();
-		Coordinates top_right = Coordinates{ top_left.x+this->get_dimensions()[0] ,top_left.y};
-		Coordinates bottom_left = Coordinates{ top_left.x ,top_left.y-this->get_dimensions()[1]};
-		Coordinates bottom_right = Coordinates{  top_right.x , bottom_left.y};
-		
-
-		std::cout << "Square to verify top left  ( " << top_left.x << " : " << top_left.y << " ) ";
-		std::cout << "Square to verify right bot ( " << bottom_right.x << " : " << bottom_right.y << " ) " << std::endl;
-
-		if  (contact1 == top_left && contact2 == top_right) {
-			return 0;
-		} else if (contact1 == top_left && contact2 == bottom_left) {
-			return 3;
-		} else if (contact1 == bottom_left && contact2 == bottom_right) {
-			return 2;
-		} else {
-			return 1;
-		}
-	
-	
-}
-*/
 
 Coordinates Element::get_position() {
 	// we need to get the upper corner coordinates.

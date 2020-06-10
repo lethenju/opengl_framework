@@ -39,7 +39,6 @@ public:
     Coordinates get_position();
     std::array<float,2>  get_dimensions();
     bool is_colliding_with(Element another_element);
-    int get_direction(Element another_element);
 
 };
 
