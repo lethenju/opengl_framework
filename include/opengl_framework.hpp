@@ -110,31 +110,33 @@ class Element : public std::vector<Triangle>
 {
 public:
     int translate(float x, float y);
-	int set_position(float x, float y);
-	int resize(Coordinates resizePoint, float factorX, float factorY);
+    int set_position(float x, float y);
+
+    int resize(Coordinates resizePoint, float factorX, float factorY);
     int rotate(Coordinates rotationPoint, float rad);
-	Coordinates get_center();
+    Coordinates get_center();
     Coordinates get_position();
     std::array<float,2>  get_dimensions();
     bool is_colliding_with(Element another_element);
-	
-    int set_stickyness(float s);
-    float get_stickyness();
-private:
-    float stickyness = 0;
 };
 
 bool operator==(const Element& e1, const Element& e2);
-
 /** 
  * a PhysicsElement is an Element object with extra physics properties.
  */
+
 class PhysicsElement{
 public:
+    PhysicsElement(Element* e, bool m, std::array<float, 2> v, std::array<float, 2> a)
+        : element(e), movable(m), velocity(v), acceleration(a) {};
     Element* element;
     bool movable;
     std::array<float, 2> velocity;
     std::array<float, 2> acceleration;
+    int set_stickyness(float s);
+    float get_stickyness();
+private:
+    float stickyness = 0;
 };
 
 
@@ -143,6 +145,8 @@ public:
     int subscribe (Element* e);
     int subscribe (Element* e, float gravity);
     int subscribe (Element* e, float gravity, bool movable);
+    int subscribe (Element* e, float gravity, bool movable, float stickyness);
+
     int remove (Element* e);
 
     float get_gravity();
@@ -168,6 +172,7 @@ private:
 };
 
 void my_physics_thread(Physics *physics_manager);
+
 
 /**
  * Represent a Rectangle, as an Element

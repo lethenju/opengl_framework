@@ -43,25 +43,37 @@ int Physics::stop() {
 }
 
 int Physics::subscribe (Element* e) {
-	PhysicsElement *physicsElement = new PhysicsElement	{
+	PhysicsElement *physicsElement = new PhysicsElement	(
 		e, true, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , this->gravity}
-	};
+	);
 	this->physics_subscribed_elements.push_back(*physicsElement);
 	return 0;
 }
 
 int Physics::subscribe (Element* e, float gravity) {
-	PhysicsElement *physicsElement = new PhysicsElement	{
+	PhysicsElement *physicsElement = new PhysicsElement	(
 		e, true, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , gravity}
-	};
+	);
 	this->physics_subscribed_elements.push_back(*physicsElement);
 	return 0;
 }
 
 int Physics::subscribe (Element* e, float gravity, bool movable) {
-	PhysicsElement *physicsElement = new PhysicsElement	{
+	PhysicsElement *physicsElement = new PhysicsElement	(
 		e, movable, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , gravity}
-	};
+	);
+	this->physics_subscribed_elements.push_back(*physicsElement);
+	return 0;
+}
+
+int Physics::subscribe (Element* e, float gravity, bool movable, float stickyness) {
+	PhysicsElement *physicsElement = new PhysicsElement	(
+		e, movable, std::array<float, 2> {0 , 0}, std::array<float, 2> {0 , gravity}
+	);
+	if (physicsElement->set_stickyness(stickyness) != 0) {
+		return -1;
+	}
+
 	this->physics_subscribed_elements.push_back(*physicsElement);
 	return 0;
 }
@@ -167,7 +179,7 @@ bool Physics::handle_collisions(PhysicsElement* element, float velocity_x, float
 				element_to_move->element->translate(velocity_x , 0);
 				if (element_to_move->element->is_colliding_with(*other_one->element)) {
 						// inverse Y velocity, reducing it by the stickyness
-						element->velocity[0] =  (element->velocity[0] * -1) * (1 - element->element->get_stickyness());
+						element->velocity[0] =  (element->velocity[0] * -1) * (1 - element->get_stickyness());
 						// return to not colliding state
 						element_to_move->element->translate(-velocity_x , 0);
 				}
@@ -176,7 +188,7 @@ bool Physics::handle_collisions(PhysicsElement* element, float velocity_x, float
 				element_to_move->element->translate(0 , velocity_y);
 				if (element_to_move->element->is_colliding_with(*other_one->element)) {
 						// inverse Y velocity, reducing it by the stickyness
-						element->velocity[1] =  (element->velocity[1] * -1) * (1 - element->element->get_stickyness());
+						element->velocity[1] =  (element->velocity[1] * -1) * (1 - element->get_stickyness());
 						// return to not colliding state
 						element_to_move->element->translate(-velocity_y , 0);
 				}
@@ -199,7 +211,6 @@ void my_physics_thread(Physics *physics_manager) {
 
 		usleep(50000 * fElapsedTime);
 		for (auto & element : physics_manager->physics_subscribed_elements){
-		
 			physics_manager->handle_collisions(&element,element.velocity[0]/100, element.velocity[1]/100);
 			element.element->translate(element.velocity[0]/100, element.velocity[1]/100);
 				// Should be great to override += for std::array
@@ -207,4 +218,22 @@ void my_physics_thread(Physics *physics_manager) {
 			element.velocity[1] += element.acceleration[1]/100;
 		}
 	}
+}
+PhysicsElement::PhysicsElement(Element* e, bool m, std::array<float, 2> v, std::array<float, 2> a) {
+	this->element = e;
+	this->movable = m;
+	this->velocity = v;
+	this->acceleration = a;
+}
+
+int PhysicsElement::set_stickyness(float s) {
+	// stickiness should be included between 0 and 1
+	if (s < 0 || s > 1) {
+		return -1;
+	}
+	this->stickyness = s;
+	return 0;
+}
+float PhysicsElement::get_stickyness() {
+	return this->stickyness;
 }

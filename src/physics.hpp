@@ -26,12 +26,18 @@ SOFTWARE.
 #include <array>
 #include <thread>
 #include "element.hpp"
+
 class PhysicsElement{
 public:
+    PhysicsElement(Element* e, bool m, std::array<float, 2> v, std::array<float, 2> a);
     Element* element;
     bool movable;
     std::array<float, 2> velocity;
     std::array<float, 2> acceleration;
+    int set_stickyness(float s);
+    float get_stickyness();
+private:
+    float stickyness = 0;
 };
 
 
@@ -40,6 +46,8 @@ public:
     int subscribe (Element* e);
     int subscribe (Element* e, float gravity);
     int subscribe (Element* e, float gravity, bool movable);
+    int subscribe (Element* e, float gravity, bool movable, float stickyness);
+
     int remove (Element* e);
 
     float get_gravity();

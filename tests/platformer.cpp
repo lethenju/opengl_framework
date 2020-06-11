@@ -43,9 +43,7 @@ int main(void)
 	
 	// player
 	player_id = world.add_element(Rectangle(0,0,0.05f,0.05f, Color(0,1,0)));
-	physics_manager.subscribe(world.get_element(player_id), -0.05f, true); 
-	
-	world.get_element(player_id)->set_stickyness(0.9f);
+	physics_manager.subscribe(world.get_element(player_id), -0.05f, true, 0.9f); 	
 
 	// plateform
 	int bottom_wall_id = world.add_element(Rectangle(-1,-1,2,0.05f, Color(1,1,1)));
