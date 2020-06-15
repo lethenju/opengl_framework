@@ -39,6 +39,7 @@ set(LIBRARY_HEADER_FILES
 	src/ogl_wrapper.hpp
 	src/shader.hpp
 	src/triangle.hpp
+	src/text.hpp
 	src/geom.hpp
 	src/physics.hpp
 	src/cute_c2.h
@@ -52,6 +53,7 @@ set(LIBRARY_SOURCE_FILES
 	src/shader.cpp
 	src/triangle.cpp
 	src/geom.cpp
+	src/text.cpp
 	src/physics.cpp
 )
 
