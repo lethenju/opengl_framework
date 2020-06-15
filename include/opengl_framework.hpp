@@ -220,6 +220,19 @@ public:
     SevenSegment(bool segments[7], float x, float y,float width,float height, Color color);
 };
 
+/* A Letter, created from a char, actually a wrapper around SevenSegment
+ * only letters through a-z and numbers are working
+ */
+class Letter
+{
+    Letter(char c, float x, float y, float width, float height, Color color);
+    /** Public Seven Segment representation of the letter, to move it to some place 
+    * when needed
+    */
+    SevenSegment *repr;
+};
+
+
 /**
  * Represent the 2D "world" with primarily a list of elements.
  */ 

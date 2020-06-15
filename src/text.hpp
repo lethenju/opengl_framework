@@ -27,8 +27,9 @@ SOFTWARE.
 /* A Letter, created from a char, actually a wrapper around SevenSegment
  * only letters through a-z and numbers are working
  */
-class Letter {
-    Letter(char c, float x, float y, float sizeX, float sizeY, float thickness, Color color);
+class Letter
+{
+    Letter(char c, float x, float y, float width, float height, Color color);
     /** Public Seven Segment representation of the letter, to move it to some place 
     * when needed
     */
@@ -38,6 +39,6 @@ class Letter {
 /** The text is a vector of letters, with additionnal properties as the
  * space between letters etc.
  */
-class Text : public std::vector<Letter> {
-
+class Text : public std::vector<Letter>
+{
 };
