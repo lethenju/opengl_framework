@@ -32,7 +32,7 @@ class Letter {
     /** Public Seven Segment representation of the letter, to move it to some place 
     * when needed
     */
-    SevenSegment repr;
+    SevenSegment *repr;
 };
 
 /** The text is a vector of letters, with additionnal properties as the
