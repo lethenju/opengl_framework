@@ -53,6 +53,22 @@ int main(void)
 	int e_id = world.add_element(SevenSegment(e, 0.48f, 0, 0.1f, 0.2f, Color(0.5f, 0.5f, 1)));
 	int f_id = world.add_element(SevenSegment(f, 0.60f, 0, 0.1f, 0.2f, Color(0, 1, 0.5f)));
 
+	Letter letterH = Letter('H', 0, 0.3f, 0.1f, 0.2f, Color(1, 1, 1));
+	world.add_element(*(letterH.repr));
+	
+	Letter letterE = Letter('E', 0.11f, 0.3f, 0.1f, 0.2f, Color(1, 1, 1));
+	world.add_element(*(letterE.repr));
+
+	Letter letterL = Letter('L', 0.23f, 0.3f, 0.1f, 0.2f, Color(1, 1, 1));
+	world.add_element(*(letterL.repr));
+	
+	Letter letterL2 = Letter('L', 0.34f, 0.3f, 0.1f, 0.2f, Color(1, 1, 1));
+	world.add_element(*(letterL2.repr));
+
+	Letter letterO = Letter('O', 0.46f, 0.3f, 0.1f, 0.2f, Color(1, 1, 1));
+	world.add_element(*(letterO.repr));
+	
+
 	while (continue_flag)
 	{
 		ogl.ogl_calc_vertex_array();
