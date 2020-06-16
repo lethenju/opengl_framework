@@ -42,4 +42,6 @@ public:
  */
 class Text : public std::vector<Letter>
 {
+public:
+    Text(const char* text, float x, float y, float letter_width, float letter_height, float space_between_letters, Color color);
 };

@@ -111,3 +111,17 @@ add_executable(test_mouse_exe
 target_link_libraries(test_mouse_exe
 	opengl_framework
 )	
+
+
+set(TEST_TEXT_SOURCE_FILES
+	tests_text.cpp
+)
+
+add_executable(test_text_exe
+	${TESTS_INCLUDE_FILE}
+	${TEST_TEXT_SOURCE_FILES}
+)
+
+target_link_libraries(test_text_exe
+	opengl_framework
+)	

@@ -24,6 +24,8 @@ SOFTWARE.
 */
 #include "text.hpp"
 #include "stdio.h"
+#include <string.h>
+
 Letter::Letter(char c, float x, float y, float width, float height, Color color)
 {
     // TODO Use a map of character
@@ -146,7 +148,7 @@ Letter::Letter(char c, float x, float y, float width, float height, Color color)
         letter = 8;
         break;
     default:
-        return;
+        letter = 0;
     }
     
     bool sevenSegArray[7];
@@ -157,4 +159,14 @@ Letter::Letter(char c, float x, float y, float width, float height, Color color)
     printf("\n");
 
     this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+}
+
+
+Text::Text(const char* text, float x, float y, float letter_width, float letter_height, float space_between_letters, Color color) {
+    int size = strlen(text);
+    float x_letter_position = x;
+    for (int i = 0; i < size; i++) {
+        this->push_back(Letter(*(text+i),x_letter_position, y, letter_width, letter_height, color));
+        x_letter_position += letter_width + space_between_letters;
+    }
 }

@@ -234,6 +234,14 @@ public:
 
 };
 
+/** The text is a vector of letters, with additionnal properties as the
+ * space between letters etc.
+ */
+class Text : public std::vector<Letter>
+{
+public:
+    Text(const char* text, float x, float y, float letter_width, float letter_height, float space_between_letters, Color color);
+};
 
 /**
  * Represent the 2D "world" with primarily a list of elements.
