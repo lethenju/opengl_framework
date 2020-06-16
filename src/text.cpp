@@ -1,3 +1,4 @@
+#include <map>
 /*
 MIT License
 
@@ -22,235 +23,138 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #include "text.hpp"
-
+#include "stdio.h"
 Letter::Letter(char c, float x, float y, float width, float height, Color color)
 {
+    // TODO Use a map of character
+
     c = std::toupper(c);
+    int letter = 0;
     switch (c)
     {
     case 'A':
-    {
-        bool sevenSegArray[7] = {0, 1, 1, 1, 1, 1, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        // use the decimal representation of the seven segment
+        // 0 1 1 1 1 1 1 -> 63
+        letter = 63;
         break;
-    }
     case 'B':
-    {
-        bool sevenSegArray[7] = {1, 1, 1, 1, 1, 0, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 124;
         break;
-    }
     case 'C':
-    {
-        bool sevenSegArray[7] = {1, 1, 0, 1, 0, 0, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 104;
         break;
-    }
     case 'D':
-    {
-        bool sevenSegArray[7] = {1, 1, 1, 1, 0, 1, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 122;
         break;
-    }
     case 'E':
-    {
-        bool sevenSegArray[7] = {1, 1, 0, 1, 1, 0, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 109;
         break;
-    }
     case 'F':
-    {
-        bool sevenSegArray[7] = {0, 1, 0, 1, 1, 0, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 45;
         break;
-    }
     case 'G':
-    {
-        bool sevenSegArray[7] = {1, 1, 1, 0, 1, 0, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 117;
         break;
-    }
     case 'H':
-    {
-        bool sevenSegArray[7] = {0, 1, 1, 1, 1, 0, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 60;
         break;
-    }
     case 'I':
-    {
-        bool sevenSegArray[7] = {0, 0, 1, 0, 0, 0, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 16;
         break;
-    }
     case 'J':
-    {
-        bool sevenSegArray[7] = {1, 1, 1, 0, 0, 1, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 114;
         break;
-    }
     case 'K':
-    {
-        bool sevenSegArray[7] = {0, 1, 1, 1, 1, 0, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 61;
         break;
-    }
     case 'L':
-    {
-        bool sevenSegArray[7] = {1, 1, 0, 0, 1, 0, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 100;
         break;
-    }
     case 'M':
-    {
-        bool sevenSegArray[7] = {0, 1, 1, 1, 0, 0, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 57;
         break;
-    }
     case 'N':
-    {
-        bool sevenSegArray[7] = {0, 1, 1, 1, 0, 0, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 56;
         break;
-    }
     case 'O':
-    {
-        bool sevenSegArray[7] = {1, 1, 1, 1, 0, 0, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 120;
         break;
-    }
     case 'P':
-    {
-        bool sevenSegArray[7] = {0, 1, 0, 1, 1, 1, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 47;
         break;
-    }
     case 'Q':
-    {
-        bool sevenSegArray[7] = {0, 0, 1, 1, 1, 1, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 31;
         break;
-    }
     case 'R':
-    {
-        bool sevenSegArray[7] = {0, 1, 0, 1, 0, 0, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 40;
         break;
-    }
     case 'S':
-    {
-        bool sevenSegArray[7] = {1, 0, 1, 1, 1, 0, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 93;
         break;
-    }
     case 'T':
-    {
-        bool sevenSegArray[7] = {1, 1, 0, 1, 1, 0, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 108;
         break;
-    }
     case 'U':
-    {
-        bool sevenSegArray[7] = {1, 1, 1, 0, 1, 1, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 118;
         break;
-    }
     case 'V':
-    {
-        bool sevenSegArray[7] = {1, 1, 1, 0, 0, 0, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 112;
         break;
-    }
     case 'W':
-    {
-        bool sevenSegArray[7] = {1, 0, 0, 1, 1, 1, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 78;
         break;
-    }
     case 'X':
-    {
-        bool sevenSegArray[7] = {0, 1, 1, 1, 1, 1, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 62;
         break;
-    }
     case 'Y':
-    {
-        bool sevenSegArray[7] = {1, 0, 1, 1, 1, 1, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 94;
         break;
-    }
     case 'Z':
-    {
-        bool sevenSegArray[7] = {1, 1, 0, 1, 0, 1, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 107;
         break;
-    }
     case '0':
-    {
-        bool sevenSegArray[7] = {1, 1, 1, 0, 1, 1, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 119;
         break;
-    }
     case '1':
-    {
-        bool sevenSegArray[7] = {0, 0, 1, 0, 0, 1, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 18;
         break;
-    }
     case '2':
-    {
-        bool sevenSegArray[7] = {1, 1, 0, 1, 0, 1, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 107;
         break;
-    }
     case '3':
-    {
-        bool sevenSegArray[7] = {1, 0, 1, 1, 0, 1, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 91;
         break;
-    }
     case '4':
-    {
-        bool sevenSegArray[7] = {0, 0, 1, 1, 1, 1, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 30;
         break;
-    }
     case '5':
-    {
-        bool sevenSegArray[7] = {1, 0, 1, 1, 1, 0, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 93;
         break;
-    }
     case '6':
-    {
-        bool sevenSegArray[7] = {1, 1, 1, 1, 1, 0, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 125;
         break;
-    }
     case '7':
-    {
-        bool sevenSegArray[7] = {0, 0, 1, 0, 0, 1, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 19;
         break;
-    }
     case '8':
-    {
-        bool sevenSegArray[7] = {1, 1, 1, 1, 1, 1, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 127;
         break;
-    }
     case '9':
-    {
-        bool sevenSegArray[7] = {1, 0, 1, 1, 1, 1, 1};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 95;
         break;
-    }
     case '-':
-    {
-        bool sevenSegArray[7] = {0, 0, 0, 1, 0, 0, 0};
-        this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
+        letter = 8;
         break;
-    }
     default:
         return;
     }
+    
+    bool sevenSegArray[7];
+    for (int i = 6; i >= 0; i--) {
+        sevenSegArray[i] = letter%2 != 0;
+        letter = letter/2;
+    }
+    printf("\n");
+
+    this->repr = new SevenSegment(sevenSegArray, x, y, width, height, color);
 }

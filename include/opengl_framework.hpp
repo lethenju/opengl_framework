@@ -225,11 +225,13 @@ public:
  */
 class Letter
 {
+public:
     Letter(char c, float x, float y, float width, float height, Color color);
     /** Public Seven Segment representation of the letter, to move it to some place 
     * when needed
     */
     SevenSegment *repr;
+
 };
 
 
