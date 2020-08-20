@@ -23,9 +23,9 @@ sudo apt install cmake make g++
 
 This repository does not include OpenGL.
 
-You can install OpenGL and the needed OpenGL libraries with the following command 
+You can install OpenGL and the needed libraries with the following command 
 ``` bash
-sudo apt install libx11-dev libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libxext-dev
+sudo apt install libx11-dev libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libxext-dev libxcursor-dev libxinerama-dev
 ```
 
 Then type the following commands to build the project : 
